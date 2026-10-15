@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette taken from the main Sripada Studios site (sswebsite). */
+  --color-ink: #081816;
+  /* Translucent so the site-wide gradient shows through panels and rules. */
+  --color-ink-soft: rgb(8 24 22 / 0.3);
+  --color-ink-line: rgb(255 250 242 / 0.14);
+  --color-teal-deep: #0f3f45;
+  --color-teal: #216974;
+  --color-paper: #fffaf2;
+  --color-paper-dim: #f0f9f8;
+  --color-cream: #fffefa;
+  --color-muted: #39545a;
+  --color-line: #c8dee2;
+  --color-brand: #54c4b6;
+  --color-brand-soft: #84efe0;
+
+  --font-sans: var(--font-poppins);
+  --font-serif: var(--font-playfair);
+  --font-mono: var(--font-poppins);
+
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+::selection {
+  background: var(--color-brand);
+  color: var(--color-ink);
+}
+
+/* Horizontal scrollers: hide the bar but keep native scrolling. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fine film grain over dark sections for a less flat, more photographic feel. */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 45s linear infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-up {
+  animation: fade-up 1s var(--ease-premium) both;
+}
+
+/*
+ * Hero card fan (static fallback). Each card sets --off (signed distance from
+ * the centre card), --y (arc drop), --r (tilt) and --d (stagger) inline. Cards
+ * deal outwards from a single stack in the centre; translate % is relative to
+ * the card, and 72% matches the overlap step set by the negative margin.
+ */
+.fan-card {
+  transform: translateY(var(--y)) rotate(var(--r));
+  animation: fan-deal 1.2s var(--ease-premium) var(--d) both;
+}
+@keyframes fan-deal {
+  from {
+    opacity: 0;
+    transform: translate(calc(var(--off) * -72%), 40px) rotate(0deg) scale(0.92);
+  }
+  30% {
+    opacity: 1;
+  }
+}
+/* Same deal-in for the travelling layer, whose outer element owns position and tilt. */
+.fan-deal {
+  animation: fan-deal-in 1.2s var(--ease-premium) var(--d) both;
+}
+@keyframes fan-deal-in {
+  from {
+    opacity: 0;
+    transform: translate(calc(var(--off) * -72%), 40px) scale(0.92);
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+/*
+ * Travelling cards (<TravelLayer>). There is only ever one visible set of
+ * images: the layer's. The fan and collage slots are measurement placeholders
+ * whose own images stay hidden, except as a fallback when the layer can't run
+ * (reduced motion here, no-JS via <noscript> in layout.tsx).
+ */
+.slot-static {
+  visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .slot-static {
+    visibility: visible;
+  }
+  .travel-layer {
+    display: none;
+  }
+}
+
+/*
+ * Expertise titles: scroll-linked horizontal drift. --p (0→1 progress) is set
+ * on the stage from JS; each row sets --dir (1 or -1).
+ */
+.drift {
+  transform: translateX(calc((var(--p, 0.5) - 0.5) * var(--dir, 1) * 5vw));
+  transition: transform 300ms ease-out;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .drift {
+    transform: none;
+  }
+}
+
+
+/* Scroll reveal, toggled by <Reveal>. Content stays visible without JS. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 1s var(--ease-premium),
+    transform 1s var(--ease-premium);
+}
+.js [data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-fade-up,
+  .animate-marquee,
+  .fan-card,
+  .fan-deal {
+    animation: none;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
