@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { Accent, ButtonLink } from "@/components/ui";
+import { site } from "@/content/site";
 import { CardFace, fanPose, travelCards } from "@/components/travel-cards/cards";
 
 export function Hero() {
@@ -20,7 +21,7 @@ export function Hero() {
       {/* Card fan */}
       <ul
         aria-label="Selected work"
-        className="relative mt-[min(3.5rem,6svh)] flex justify-center pb-[calc(var(--w)*0.3)] [--w:clamp(6.5rem,min(15vw,20svh),15rem)]"
+        className="relative mt-[min(3.5rem,6svh)] flex justify-center pb-[calc(var(--w)*0.3)] [--w:clamp(5.75rem,min(12.5vw,17svh),13rem)]"
       >
         {travelCards.map((c, i) => {
           const { off, yRem, r, z } = fanPose(i);
@@ -63,7 +64,7 @@ export function Hero() {
       </p>
 
       <div className="animate-fade-up relative mt-8 flex flex-wrap justify-center gap-3 [animation-delay:1000ms]">
-        <ButtonLink href="#journey">Explore Our Journey</ButtonLink>
+        <ButtonLink href={site.bookCallHref}>Book a Call</ButtonLink>
         <ButtonLink href="#media" variant="outline">
           Media &amp; PR Enquiries
         </ButtonLink>

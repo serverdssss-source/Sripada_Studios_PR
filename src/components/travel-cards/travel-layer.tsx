@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cn } from "@/lib/cn";
-import { CardFace, collagePoses, fanPose, travelCards } from "./cards";
+import { CardFace, cardRatio, collagePoses, fanPose, travelCards } from "./cards";
 
 type Pose = { x: number; y: number; w: number; r: number };
 
@@ -80,7 +80,7 @@ export function TravelLayer() {
         const y = lerp(a.y, b.y, t);
         const s = lerp(a.w, b.w, t) / a.w;
         const r = lerp(a.r, b.r, t);
-        el.style.transform = `translate(${x - a.w / 2}px, ${y - a.w / 2}px) rotate(${r}deg) scale(${s})`;
+        el.style.transform = `translate(${x - a.w / 2}px, ${y - (a.w * cardRatio) / 2}px) rotate(${r}deg) scale(${s})`;
         el.style.zIndex = String(t > 0.5 ? 20 + (collageZ[i] ?? 0) : 10 + fanPose(i).z);
       });
     };

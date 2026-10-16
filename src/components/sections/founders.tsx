@@ -2,6 +2,7 @@ import Image from "next/image";
 import { founders, type Founder } from "@/content/site";
 import { Accent, Section, SectionHeading } from "@/components/ui";
 import { Reveal } from "@/components/reveal";
+import { cn } from "@/lib/cn";
 
 export function Founders() {
   return (
@@ -93,7 +94,7 @@ function FounderBlock({ founder: f }: { founder: Founder }) {
             alt={`Portrait of ${f.name}`}
             fill
             sizes="(min-width: 768px) 45vw, 100vw"
-            className="object-cover object-[center_25%]"
+            className={cn("object-cover", f.imagePosition ?? "object-top")}
           />
         </div>
         <p className="mt-8 text-[clamp(1.375rem,2.4vw,2rem)] leading-snug font-medium tracking-[-0.02em]">

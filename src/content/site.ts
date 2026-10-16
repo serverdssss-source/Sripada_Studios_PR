@@ -18,6 +18,8 @@ export const site = {
     pressEmail: "press@sripadastudios.in",
     phone: "+91 00000 00000",
   },
+  // TODO: swap for a scheduling link (e.g. Calendly) once available
+  bookCallHref: "#contact",
   // TODO: replace with real profile URLs
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/" },
@@ -64,6 +66,7 @@ export type Founder = {
   bio: string;
   points: string[];
   image: string;
+  imagePosition?: string;
   profileHref: string;
 };
 
@@ -80,7 +83,8 @@ export const founders: Founder[] = [
       "Client & Brand Relationships",
       "Building teams and creative ecosystems",
     ],
-    image: "/images/founder-phani.jpg",
+    image: "/images/phani.webp",
+    imagePosition: "object-[center_25%]",
     profileHref: "#contact", // TODO: link to full profile
   },
   {
@@ -95,7 +99,8 @@ export const founders: Founder[] = [
       "Performance Marketing",
       "Team Building & Business Strategy",
     ],
-    image: "/images/founder-sathwik.jpg",
+    image: "/images/team-satwik.jpg",
+    imagePosition: "object-[center_10%]",
     profileHref: "#contact", // TODO: link to full profile
   },
 ];
@@ -139,63 +144,162 @@ export const expertise = [
   },
 ];
 
+// Each industry shows a tile cluster: six images around the Sripada mark, with two
+// cursor tags. Tiles: top-left, top-right, mid-left, mid-right, bottom-left, bottom-right.
 export const industries = [
   {
     title: "Healthcare",
     items: ["Hospitals", "Clinics", "Healthcare Brands"],
-    image: "/images/industry-healthcare.jpg",
+    tags: ["Hospitals", "Clinics"],
+    tiles: [
+      "/media/hearfon/hf-october-2.webp",
+      "/media/creatives/aanya.webp",
+      "/media/creatives/aryamba-ivf-creatives.webp",
+      "/media/hearfon/28-01-2026.webp",
+      "/media/creatives/wmn.webp",
+      "/media/hearfon/hf-october-4.webp",
+    ],
   },
   {
     title: "Education",
     items: ["Preschools", "Educational Products", "Institutions"],
-    image: "/images/industry-education.jpg",
+    tags: ["Preschools", "Institutions"],
+    tiles: [
+      "/media/littlekidz/lk-2026-1.webp",
+      "/media/littlekidz/cc-01-2.webp",
+      "/media/littlekidz/01.webp",
+      "/media/littlekidz/lk-cc-05.webp",
+      "/media/littlekidz/lk-cc-04.webp",
+      "/media/littlekidz/lk-2026.webp",
+    ],
   },
   {
     title: "Entertainment",
     items: ["Films", "OTT", "Artists", "Events"],
-    image: "/images/industry-entertainment.jpg",
+    tags: ["Films", "Events"],
+    tiles: [
+      "/media/films/ui.webp",
+      "/media/films/45.webp",
+      "/media/films/lm.webp",
+      "/media/films/sf.webp",
+      "/media/films/kaalapathar.webp",
+      "/media/films/ap.webp",
+    ],
   },
   {
     title: "Consumer Brands",
     items: ["Beauty", "Wellness", "Food", "Lifestyle"],
-    image: "/images/industry-consumer.jpg",
+    tags: ["Food", "Wellness"],
+    tiles: [
+      "/media/creatives/samrat.webp",
+      "/media/creatives/svatantra.webp",
+      "/media/creatives/ff.webp",
+      "/media/kovedaa/kovedaa-designs.webp",
+      "/media/kovedaa/cc-01-1.webp",
+      "/media/kovedaa/kovedaa-designs-4.webp",
+    ],
   },
   {
     title: "B2B & Corporate",
     items: ["Professional Services", "B2B Brands", "Corporate"],
-    image: "/images/industry-b2b.jpg",
+    tags: ["B2B Brands", "Corporate"],
+    // TODO: swap these stock photos for real B2B client creatives
+    tiles: [
+      "/images/industry-b2b.jpg",
+      "/images/expertise-strategy.jpg",
+      "/images/team.jpg",
+      "/images/media-talk.jpg",
+      "/images/about-studio.jpg",
+      "/images/expertise-performance.jpg",
+    ],
   },
   {
     title: "D2C & E-Commerce",
     items: ["Consumer Products", "Digital-first Brands"],
-    image: "/images/industry-d2c.jpg",
+    tags: ["Skincare", "D2C"],
+    tiles: [
+      "/media/kovedaa/kovedaa-designs-1.webp",
+      "/media/kovedaa/cc-03.webp",
+      "/media/kovedaa/kovedaa-designs-2.webp",
+      "/media/kovedaa/cc-05.webp",
+      "/media/kovedaa/kovedaa-designs-5.webp",
+      "/media/kovedaa/kovedaa-designs-3.webp",
+    ],
   },
 ];
 
-// SAMPLE gallery pool for the Work folders. Replace each work's `gallery` with
-// real campaign images (14 per project fills the grid).
-const galleryPool = [
-  "about-studio",
-  "expertise-content",
-  "expertise-creative",
-  "expertise-entertainment",
-  "expertise-performance",
-  "expertise-social",
-  "expertise-strategy",
-  "industry-b2b",
-  "industry-consumer",
-  "industry-d2c",
-  "industry-education",
-  "industry-entertainment",
-  "industry-healthcare",
-  "media-event",
-  "media-podcast",
-  "media-talk",
-  "team",
-  "hero",
-].map((n) => `/images/${n}.jpg`);
-const sampleGallery = (offset: number) =>
-  Array.from({ length: 14 }, (_, k) => galleryPool[(offset + k) % galleryPool.length]);
+// Work folder galleries: 15 images fill the grid (5 columns × 3); fewer wrap round.
+// HearFon creatives, column by column (3 per column); middle row is the most visible.
+const hearfonGallery = [
+  "/media/hearfon/23-01-2026.webp",
+  "/media/hearfon/28-01-2026.webp",
+  "/media/hearfon/hf-05-12-2025.webp",
+  "/media/hearfon/hf-cc-01.webp",
+  "/media/hearfon/hf-october-2.webp",
+  "/media/hearfon/hf-cc-07.webp",
+  "/media/hearfon/10-01-2026.webp",
+  "/media/hearfon/cc-01.webp",
+  "/media/hearfon/hf-october-1.webp",
+  "/media/hearfon/hf-08-12-2025.webp",
+  "/media/hearfon/hf-october-4.webp",
+  "/media/hearfon/hf-october.webp",
+  "/media/hearfon/hf-october-3.webp",
+  "/media/hearfon/hf-cc-07-1.webp",
+];
+
+// Littlekidz / Lilbeez creatives, same column-by-column layout; brands alternate.
+const littlekidzGallery = [
+  "/media/littlekidz/01.webp",
+  "/media/littlekidz/lk-2026-1.webp",
+  "/media/littlekidz/cc-03.webp",
+  "/media/littlekidz/lk-cc-01.webp",
+  "/media/littlekidz/cc-01-2.webp",
+  "/media/littlekidz/lk-cc-04.webp",
+  "/media/littlekidz/lb-april-1080-x-1350-px-1.webp",
+  "/media/littlekidz/lk-2026.webp",
+  "/media/littlekidz/lb-cc-12.webp",
+  "/media/littlekidz/lk-cc-15.webp",
+  "/media/littlekidz/lk-cc-02-1.webp",
+  "/media/littlekidz/lb-april-1080-x-1350-px.webp",
+  "/media/littlekidz/cc-05.webp",
+  "/media/littlekidz/lk-cc-05.webp",
+];
+
+// Kovedaa creatives, same column-by-column layout.
+const kovedaaGallery = [
+  "/media/kovedaa/kovedaa-designs-2.webp",
+  "/media/kovedaa/cc-01-1.webp",
+  "/media/kovedaa/cc-05.webp",
+  "/media/kovedaa/cc-03.webp",
+  "/media/kovedaa/kovedaa-designs-1.webp",
+  "/media/kovedaa/kovedaa-designs-5.webp",
+  "/media/kovedaa/kovedaa-designs-3.webp",
+  "/media/kovedaa/kovedaa-designs-4.webp",
+  "/media/kovedaa/kovedaa-designs-6.webp",
+  "/media/kovedaa/kovedaa-designs-1080-x-1920-px.webp",
+  "/media/kovedaa/kovedaa-designs.webp",
+  "/media/kovedaa/cc-07.webp",
+  "/media/kovedaa/carousel-03-18-06-2026.webp",
+];
+
+// Film & entertainment posters, same column-by-column layout.
+const filmsGallery = [
+  "/media/films/mk.webp",
+  "/media/films/45.webp",
+  "/media/films/dm-mn-ad-02.webp",
+  "/media/films/jd.webp",
+  "/media/films/lm.webp",
+  "/media/films/trailer-out-now-poster.webp",
+  "/media/films/sf-2.webp",
+  "/media/films/ui.webp",
+  "/media/films/pentagon.webp",
+  "/media/films/kaalapathar.webp",
+  "/media/films/sf.webp",
+  "/media/films/jd-2.webp",
+  "/media/films/dm.webp",
+  "/media/films/ap.webp",
+  "/media/films/tt.webp",
+];
 
 // TODO: link each card to a full case study once written
 export const work = [
@@ -203,33 +307,41 @@ export const work = [
     category: "Healthcare",
     client: "HearFon Audiology",
     summary: "Digital awareness + lead generation + regional content strategy.",
+    description:
+      "Hearing loss is easy to ignore until it isn't. We made hearing care feel approachable for HearFon with empathetic, family-first campaigns, Kannada-first regional content that speaks to local audiences, and lead-generation funnels that turn awareness into booked hearing consultations at HearFon clinics.",
     services: ["Lead Generation", "Regional Content", "Awareness"],
-    image: "/images/work-hearfon.jpg",
-    gallery: sampleGallery(0),
+    image: "/media/hearfon/hf-october-2.webp",
+    gallery: hearfonGallery,
   },
   {
     category: "Education",
     client: "Littlekidz / Lilbeez",
     summary: "Admissions + franchise + digital growth campaigns.",
+    description:
+      "Two sister brands, one growth story. For Little Kidz Preschool we run admission-season campaigns that answer parents' real questions, while Lilbeez showcases its learning books and teacher-training programmes to schools and educators. Franchise-focused outreach ties it together, building trust and expanding the network.",
     services: ["Admissions", "Franchise Growth", "Performance"],
-    image: "/images/work-littlekidz.jpg",
-    gallery: sampleGallery(4),
+    image: "/media/littlekidz/lk-cc-02-1.webp",
+    gallery: littlekidzGallery,
   },
   {
     category: "Consumer",
     client: "Kovedaa",
     summary: "Beauty & skincare brand launch + influencer + performance strategy.",
+    description:
+      "Kovedaa entered a crowded skincare market with body care made simple. We shaped the launch end to end: ingredient-led storytelling that makes the products easy to understand, influencer collaborations that show real routines, and performance campaigns built to drive combos and repeat purchases.",
     services: ["Brand Launch", "Influencer", "Performance"],
-    image: "/images/work-kovedaa.jpg",
-    gallery: sampleGallery(8),
+    image: "/media/kovedaa/kovedaa-designs.webp",
+    gallery: kovedaaGallery,
   },
   {
     category: "Entertainment",
     client: "Film & Entertainment Campaigns",
     summary: "Digital campaigns, influencer outreach, event amplification & audience building.",
+    description:
+      "From release buzz to packed venues, we help films and entertainment brands find their audience. Digital campaigns build anticipation, influencer outreach reaches deep into fan communities, and on-ground events are amplified online to keep the conversation going long after the day.",
     services: ["Film Marketing", "Influencer Outreach", "Events"],
-    image: "/images/work-entertainment.jpg",
-    gallery: sampleGallery(12),
+    image: "/media/films/ui.webp",
+    gallery: filmsGallery,
   },
 ];
 
@@ -333,20 +445,33 @@ export const teams = [
   "HR & Talent",
 ];
 
-// TODO: replace with 15–25 real client logos (SVG in /public/logos)
+// Logos in /public/clients are trimmed copies of /public/Client Logos, shown on the cream background.
+// width/height = optically balanced display size in px.
 export const clients = [
-  "HearFon",
-  "Littlekidz",
-  "Lilbeez",
-  "Kovedaa",
-  "Client 05",
-  "Client 06",
-  "Client 07",
-  "Client 08",
-  "Client 09",
-  "Client 10",
-  "Client 11",
-  "Client 12",
+  { name: "Action Cut Entertainments", logo: "/clients/action-cut-entertainments.png?v=2", width: 53, height: 69 },
+  { name: "Abhani Health and Daycare Centre", logo: "/clients/abhani-health-and-daycare-centre.png?v=2", width: 109, height: 33 },
+  { name: "Aikyam Weddings", logo: "/clients/aikyam-weddings.png?v=2", width: 59, height: 61 },
+  { name: "Angola Academy", logo: "/clients/angola-academy.png?v=2", width: 118, height: 30 },
+  { name: "BodhiAble", logo: "/clients/bodhiable.png?v=2", width: 93, height: 39 },
+  { name: "Chaitanya Convention Centre", logo: "/clients/chaitanya-convention-centre.png?v=2", width: 66, height: 54 },
+  { name: "The Copper Edge Eco Resort", logo: "/clients/the-copper-edge-eco-resort.png?v=2", width: 74, height: 49 },
+  { name: "Fitness Factory", logo: "/clients/fitness-factory.png?v=2", width: 116, height: 31 },
+  { name: "G Academy", logo: "/clients/g-academy.png?v=2", width: 94, height: 38 },
+  { name: "G Cinemas", logo: "/clients/g-cinemas.png?v=2", width: 84, height: 43 },
+  { name: "G9", logo: "/clients/g9.png?v=2", width: 49, height: 49 },
+  { name: "HearFon", logo: "/clients/hearfon.png?v=2", width: 118, height: 30 },
+  { name: "Kalpavriksha Wedding Venue", logo: "/clients/kalpavriksha-wedding-venue.png?v=2", width: 113, height: 32 },
+  { name: "Lil Beez", logo: "/clients/lil-beez.png?v=2", width: 89, height: 40 },
+  { name: "Little Kidz", logo: "/clients/little-kidz.png?v=2", width: 62, height: 58 },
+  { name: "Neferrtiti Weddings", logo: "/clients/neferrtiti-weddings.png?v=2", width: 53, height: 68 },
+  { name: "Nirguna Acting School", logo: "/clients/nirguna-acting-school.png?v=2", width: 49, height: 49 },
+  { name: "Hello Ramesh Speaking", logo: "/clients/hello-ramesh-speaking.png?v=2", width: 94, height: 38 },
+  { name: "Samrat Restaurant & Party Hall", logo: "/clients/samrat-restaurant-party-hall.png?v=2", width: 64, height: 38 },
+  { name: "Skill Incarnate", logo: "/clients/skill-incarnate.png?v=2", width: 129, height: 28 },
+  { name: "Sri Chakra Pearls & Jewellery", logo: "/clients/sri-chakra-pearls-jewellery.png?v=2", width: 65, height: 55 },
+  { name: "Suraj Production", logo: "/clients/suraj-production.png?v=2", width: 107, height: 34 },
+  { name: "Total Kannada", logo: "/clients/total-kannada.png?v=2", width: 68, height: 53 },
+  { name: "Wisden Clinics", logo: "/clients/wisden-clinics.png?v=2", width: 140, height: 26 },
 ];
 
 export const clientCategories = [

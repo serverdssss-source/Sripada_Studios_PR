@@ -1,37 +1,43 @@
 import Image from "next/image";
-import { expertise, industries, work } from "@/content/site";
 import { cn } from "@/lib/cn";
 
-// The seven images that start as the hero fan and land as the About collage.
+// Client creatives that start as the hero fan and land as the About collage.
 // Left → right across the fan; index i in the fan travels to collage slot i.
 export const travelCards = [
-  { title: expertise[0].title, image: expertise[0].image },
-  { title: work[1].client, image: work[1].image },
-  { title: work[0].client, image: work[0].image },
-  { title: expertise[2].title, image: expertise[2].image },
-  { title: work[2].client, image: work[2].image },
-  { title: work[3].client, image: work[3].image },
-  { title: industries[5].title, image: industries[5].image },
+  { title: "Aryamba IVF", image: "/media/creatives/aryamba-ivf-creatives.webp" },
+  { title: "HearFon", image: "/media/creatives/hf.webp" },
+  { title: "Fitness Factory", image: "/media/creatives/ff.webp" },
+  { title: "Little Kidz", image: "/media/creatives/lk.webp" },
+  { title: "Aanya Hospitals", image: "/media/creatives/aanya.webp" },
+  { title: "Samrat Restaurant", image: "/media/creatives/samrat.webp" },
+  { title: "Svatantra", image: "/media/creatives/svatantra.webp" },
+  { title: "WMN Doctors", image: "/media/creatives/wmn.webp" },
 ];
+
+/** Card height ÷ width (creatives are 4:5 portrait). */
+export const cardRatio = 5 / 4;
 
 export const fanMid = (travelCards.length - 1) / 2;
 
 /** Fan pose for card i: arc drop (rem), tilt (deg), stacking. */
 export function fanPose(i: number) {
   const off = i - fanMid;
-  return { off, yRem: off * off * 0.45, r: off * 4, z: 10 - Math.abs(off) };
+  return { off, yRem: off * off * 0.45, r: off * 4, z: 10 - Math.ceil(Math.abs(off)) };
 }
 
 /**
  * Landing pose for card i in the About section, as % of the box width (left)
  * and height (top). Cards step diagonally from top-left to bottom-right, each
- * overlapping the one before it. Box is 10:11, so a 34%-wide square card is
- * ~31% of the box height; the last card ends flush with the bottom-right.
+ * overlapping the one before it; the last card ends flush with the bottom-right
+ * of the 10:11 box.
  */
-export const collagePoses = Array.from({ length: 7 }, (_, i) => ({
-  left: i * 11,
-  top: i * 11.5,
-  w: 34,
+const collageW = 30;
+const collageH = (collageW * cardRatio * 10) / 11;
+const collageSteps = travelCards.length - 1;
+export const collagePoses = travelCards.map((_, i) => ({
+  left: (i * (100 - collageW)) / collageSteps,
+  top: (i * (100 - collageH)) / collageSteps,
+  w: collageW,
   r: 0,
   z: i + 1,
 }));
@@ -52,7 +58,7 @@ export function CardFace({
   return (
     <div
       className={cn(
-        "ring-paper/15 bg-ink-soft relative aspect-square overflow-hidden rounded-xl shadow-[0_24px_50px_-16px_rgb(0_0_0/0.6)] ring-1 sm:rounded-2xl",
+        "ring-paper/15 bg-ink-soft relative aspect-[4/5] overflow-hidden rounded-xl shadow-[0_24px_50px_-16px_rgb(0_0_0/0.6)] ring-1 sm:rounded-2xl",
         className,
       )}
     >

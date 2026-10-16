@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { nav, site } from "@/content/site";
 import { cn } from "@/lib/cn";
 
@@ -23,16 +24,27 @@ export function SiteHeader() {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 border-b transition-colors duration-500",
+          // Cream so the logo (dark artwork) stays legible over the dark page.
+          "bg-cream/95 text-ink fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl transition-shadow duration-500",
           scrolled || open
-            ? "border-ink-line bg-teal-deep/80 backdrop-blur-xl"
-            : "border-transparent bg-transparent",
+            ? "border-ink/10 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.35)]"
+            : "border-transparent",
         )}
       >
         <div className="mx-auto box-content flex h-18 max-w-7xl items-center justify-between px-4 sm:px-8">
-          <a href="#top" className="flex items-baseline gap-2 text-lg font-semibold tracking-tight">
-            Sripada
-            <span className="font-serif font-normal italic opacity-70">Studios</span>
+          <a
+            href="#top"
+            className="flex items-center transition-opacity hover:opacity-90"
+            aria-label="Sripada Studios Home"
+          >
+            <Image
+              src="/images/ss-logo.png"
+              alt="Sripada Studios"
+              width={160}
+              height={42}
+              priority
+              className="h-10 w-auto object-contain"
+            />
           </a>
 
           <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
@@ -40,7 +52,7 @@ export function SiteHeader() {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-paper/65 hover:text-paper text-sm transition-colors"
+                className="text-ink/65 hover:text-ink text-sm transition-colors"
               >
                 {item.label}
               </a>
@@ -50,7 +62,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-3">
             <a
               href="#contact"
-              className="bg-paper text-ink hidden rounded-full px-5 py-2.5 text-sm font-medium transition-colors hover:bg-white sm:inline-block"
+              className="bg-ink text-paper hover:bg-teal-deep hidden rounded-full px-5 py-2.5 text-sm font-medium transition-colors sm:inline-block"
             >
               Start a Project
             </a>
@@ -84,14 +96,14 @@ export function SiteHeader() {
           <nav
             id="mobile-nav"
             aria-label="Mobile"
-            className="border-ink-line h-[calc(100svh-4.5rem)] border-t px-4 pt-6 pb-10 lg:hidden"
+            className="border-ink/10 h-[calc(100svh-4.5rem)] border-t px-4 pt-6 pb-10 lg:hidden"
           >
             {nav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="border-ink-line block border-b py-4 text-4xl font-medium tracking-tight"
+                className="border-ink/10 block border-b py-4 text-4xl font-medium tracking-tight"
               >
                 {item.label}
               </a>
@@ -99,11 +111,11 @@ export function SiteHeader() {
             <a
               href="#contact"
               onClick={() => setOpen(false)}
-              className="bg-paper text-ink mt-8 block rounded-full py-4 text-center font-medium"
+              className="bg-ink text-paper mt-8 block rounded-full py-4 text-center font-medium"
             >
               Start a Project
             </a>
-            <p className="text-paper/50 mt-6 text-center text-sm">{site.contact.email}</p>
+            <p className="text-ink/50 mt-6 text-center text-sm">{site.contact.email}</p>
           </nav>
         )}
       </header>

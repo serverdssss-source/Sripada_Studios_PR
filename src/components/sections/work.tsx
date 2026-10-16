@@ -41,7 +41,10 @@ export function Work() {
                 <h3 className="mt-3 text-3xl font-medium tracking-[-0.03em] md:text-4xl">
                   {w.client}
                 </h3>
-                <p className="text-paper/70 mt-4 max-w-md text-lg leading-relaxed">{w.summary}</p>
+                <p className="text-paper/85 mt-4 max-w-md text-lg leading-relaxed">{w.summary}</p>
+                <p className="text-paper/85 mt-10 max-w-md text-base leading-relaxed font-normal text-justify hyphens-auto md:text-lg lg:mt-[120px]">
+                  {w.description}
+                </p>
               </Reveal>
 
               {/* The folder */}

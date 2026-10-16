@@ -2,6 +2,7 @@ import Image from "next/image";
 import { founders, founderVoice } from "@/content/site";
 import { Accent, Section } from "@/components/ui";
 import { Reveal } from "@/components/reveal";
+import { cn } from "@/lib/cn";
 
 /** Founder quote on cream background without carousel rotation or progress bar indicators. */
 export function FounderVoice() {
@@ -35,7 +36,13 @@ export function FounderVoice() {
                   key={f.name}
                   className="ring-cream relative h-10 w-10 overflow-hidden rounded-full ring-3"
                 >
-                  <Image src={f.image} alt={f.name} fill sizes="40px" className="object-cover" />
+                  <Image
+                    src={f.image}
+                    alt={f.name}
+                    fill
+                    sizes="40px"
+                    className={cn("object-cover", f.imagePosition ?? "object-top")}
+                  />
                 </span>
               ))}
             </span>
