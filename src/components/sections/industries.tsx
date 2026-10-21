@@ -1,53 +1,18 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useRef, type CSSProperties } from "react";
-import { industries } from "@/content/site";
+import type { CSSProperties } from "react";
+import { industries, type Industry } from "@/content/site";
 import { Accent, Section, SectionHeading } from "@/components/ui";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/cn";
 
-type Industry = (typeof industries)[number];
-
 /**
  * Editorial pairs: each row holds two industries, one small and one large,
  * offset vertically and pushed to the edges of the content column. Rows alternate which
- * side gets the large cluster. Scrolling drives a parallax: clusters float at
- * different speeds.
+ * side gets the large cluster. No scroll-driven motion, so the section stays light.
  */
 export function Industries() {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const rows: Industry[][] = [];
   for (let i = 0; i < industries.length; i += 2) rows.push(industries.slice(i, i + 2));
-
-  useEffect(() => {
-    const root = sectionRef.current;
-    if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const pieces = [...root.querySelectorAll<HTMLElement>("[data-parallax]")];
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const vh = window.innerHeight;
-      for (const el of pieces) {
-        const r = el.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > vh + 200) continue;
-        // -1 when the piece's centre is at the bottom of the screen, +1 at the top.
-        const t = Math.max(-1.5, Math.min(1.5, (vh / 2 - (r.top + r.height / 2)) / (vh / 2)));
-        el.style.setProperty("--t", t.toFixed(4));
-      }
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
 
   return (
     <Section id="industries" tone="cream" className="overflow-x-clip py-16! md:py-24!">
@@ -62,7 +27,7 @@ export function Industries() {
       />
 
       {/* Same width as the heading, so the pairs line up with its left and right edges */}
-      <div ref={sectionRef} className="space-y-10 md:space-y-12">
+      <div className="space-y-10 md:space-y-12">
         {rows.map((pair, r) => {
           const smallFirst = r % 2 === 0;
           return (
@@ -96,17 +61,7 @@ export function Industries() {
 
 function IndustryPiece({ industry, large }: { industry: Industry; large: boolean }) {
   return (
-    <article
-      data-parallax
-      // Small frames rise faster than large ones as you scroll: depth.
-      className="group"
-      style={
-        {
-          "--speed": large ? "-14px" : "28px",
-          transform: "translate3d(0, calc(var(--t, 0) * var(--speed)), 0)",
-        } as CSSProperties
-      }
-    >
+    <article>
       <p className="text-muted text-xs font-medium tracking-[0.25em] uppercase">{industry.title}</p>
       <h3
         className={cn(
@@ -122,7 +77,7 @@ function IndustryPiece({ industry, large }: { industry: Industry; large: boolean
 }
 
 /*
- * Tile cluster: rows of 2-3-2 image tiles around the Sripada mark, set in a
+ * Tile cluster: rows of 2-3-2 (or 4-2-4) tiles around the Sripada mark, set in a
  * staggered grid of dashed placeholder tiles that fade out toward the edges.
  * Positions are in tile units from the centre; odd rows sit half a tile over.
  */
@@ -138,16 +93,58 @@ const FILLED: [number, number][] = [
   [0.5, 1],
 ];
 const GHOSTS: [number, number][] = [
-  ...[-2, -1, 0, 1, 2].flatMap((x) => [
-    [x, -2] as [number, number],
-    [x, 2] as [number, number],
-  ]),
+  ...[-2, -1, 0, 1, 2].flatMap((x) => [[x, -2] as [number, number], [x, 2] as [number, number]]),
   ...[-2.5, -1.5, 1.5, 2.5].flatMap((x) => [
     [x, -1] as [number, number],
     [x, 1] as [number, number],
   ]),
   [-2, 0],
   [2, 0],
+  // Inner ring too, so any slot a smaller cluster leaves empty still shows a placeholder.
+  [-0.5, -1],
+  [0.5, -1],
+  [-1, 0],
+  [1, 0],
+  [-0.5, 1],
+  [0.5, 1],
+];
+// Up to three tiles: a triangle evenly spaced round the centre (bottom-right left
+// free for the bottom tag).
+const FILLED_FEW: [number, number][] = [
+  [-0.5, -1],
+  [1, 0],
+  [-0.5, 1],
+];
+// Four tiles: a point-symmetric "Z" (top-left, mid-left, mid-right, bottom-right).
+const FILLED_FOUR: [number, number][] = [
+  [-0.5, -1],
+  [-1, 0],
+  [1, 0],
+  [0.5, 1],
+];
+// Eight tiles: 4-2-2, with the bottom pair centred.
+const FILLED_EIGHT: [number, number][] = [
+  [-1.5, -1],
+  [-0.5, -1],
+  [0.5, -1],
+  [1.5, -1],
+  [-1, 0],
+  [1, 0],
+  [-0.5, 1],
+  [0.5, 1],
+];
+// Wider 4-2-4 layout for clusters with more than six tiles; the last slot stays
+// free for the bottom tag.
+const FILLED_WIDE: [number, number][] = [
+  [-1.5, -1],
+  [-0.5, -1],
+  [0.5, -1],
+  [1.5, -1],
+  [-1, 0],
+  [1, 0],
+  [-1.5, 1],
+  [-0.5, 1],
+  [0.5, 1],
 ];
 
 // Square "stage" the tiles are placed in, centred vertically in the 3:2 frame.
@@ -160,6 +157,17 @@ const place = ([x, y]: [number, number]): CSSProperties => ({
 
 function TileCluster({ industry }: { industry: Industry }) {
   const [topTag, bottomTag] = industry.tags;
+  const count = industry.tiles.length;
+  const wide = count > FILLED.length;
+  const slots = wide
+    ? count === FILLED_EIGHT.length
+      ? FILLED_EIGHT
+      : FILLED_WIDE
+    : count <= FILLED_FEW.length
+      ? FILLED_FEW
+      : count === FILLED_FOUR.length
+        ? FILLED_FOUR
+        : FILLED;
   return (
     <div className="relative mt-2 aspect-[3/2]">
       {/* Placeholder grid, faded out radially */}
@@ -191,27 +199,40 @@ function TileCluster({ industry }: { industry: Industry }) {
             className="object-contain p-[22%]"
           />
         </span>
-        {FILLED.map((pos, k) => (
-          <span
-            key={k}
-            className="ring-ink/10 absolute aspect-square rounded-[24%] bg-white p-[3px] shadow-[0_12px_30px_-12px_rgb(8_24_22/0.35)] ring-1 transition-transform md:p-1 duration-500 ease-(--ease-premium) hover:-translate-y-1"
-            style={place(pos)}
-          >
-            <span className="relative block h-full w-full overflow-hidden rounded-[21%]">
-              <Image
-                src={industry.tiles[k]}
-                alt={k === 0 ? `${industry.title} work` : ""}
-                fill
-                sizes="(min-width: 768px) 9vw, 20vw"
-                className="object-cover object-top"
-              />
+        {slots.slice(0, industry.tiles.length).map((pos, k) => {
+          const src = industry.tiles[k];
+          const logo = src.includes("-logos/");
+          return (
+            <span
+              key={k}
+              className="ring-ink/10 absolute aspect-square rounded-[24%] bg-white p-[3px] shadow-[0_12px_30px_-12px_rgb(8_24_22/0.35)] ring-1 transition-transform duration-500 ease-(--ease-premium) hover:-translate-y-1 md:p-1"
+              style={place(pos)}
+            >
+              <span className="relative block h-full w-full overflow-hidden rounded-[21%]">
+                <Image
+                  src={src}
+                  alt={logo ? "" : k === 0 ? `${industry.title} work` : ""}
+                  fill
+                  sizes="(min-width: 768px) 9vw, 20vw"
+                  className={logo ? "object-contain p-[7%]" : "object-cover object-top"}
+                />
+              </span>
             </span>
-          </span>
-        ))}
+          );
+        })}
 
         {/* Tags beside the top-left and bottom-right tiles */}
-        <Tag label={topTag} className="top-[32%] right-[70%]" />
-        <Tag label={bottomTag} className="top-[75%] left-[66%]" />
+        {wide ? (
+          <>
+            <Tag label={topTag} className="top-[15%] left-[4%]" />
+            <Tag label={bottomTag} className="top-[66%] left-[68%]" />
+          </>
+        ) : (
+          <>
+            <Tag label={topTag} className="top-[32%] right-[70%]" />
+            <Tag label={bottomTag} className="top-[75%] left-[66%]" />
+          </>
+        )}
       </div>
     </div>
   );

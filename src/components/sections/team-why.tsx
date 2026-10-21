@@ -39,7 +39,7 @@ export function TeamWhy() {
       <div className="mt-24 grid gap-12 md:grid-cols-[1fr_1.4fr]">
         <Reveal>
           <p className="text-teal mb-6 flex items-center gap-3 text-xs font-medium tracking-[0.25em] uppercase">
-            Why Sripada
+            Why Sripada Studios
           </p>
           <h3 className="text-[clamp(2rem,4vw,3.5rem)] leading-none font-medium tracking-[-0.04em] text-ink">
             One team. <Accent>Multiple capabilities.</Accent>

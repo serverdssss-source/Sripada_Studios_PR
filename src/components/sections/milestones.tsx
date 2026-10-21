@@ -111,7 +111,7 @@ export function Milestones() {
               Milestones
             </p>
             <h2 className="text-[clamp(1.85rem,3.8vw,3.25rem)] leading-none font-medium tracking-[-0.04em] text-ink">
-              The Sripada Journey
+              The Sripada Studios Journey
             </h2>
           </Reveal>
 
@@ -166,7 +166,7 @@ export function Milestones() {
           {/* Folder Tab matching Work/Impact section */}
           <div className="relative z-10 -mb-0.5 flex w-fit">
             <div className="rounded-tl-2xl bg-linear-to-b from-[#0c353b] to-[#124850] py-2.5 pr-2 pl-6 font-mono text-[11px] sm:text-xs font-semibold tracking-wider text-paper">
-              SRIPADA ARCHIVE · 2019–NOW
+              SRIPADA STUDIOS ARCHIVE · 2019–NOW
             </div>
             <svg
               aria-hidden
@@ -277,7 +277,7 @@ export function Milestones() {
                     Milestones Dossier
                   </span>
                   <h4 className="mt-0.5 text-lg sm:text-xl md:text-2xl font-medium tracking-tight text-paper">
-                    The Sripada Archive
+                    The Sripada Studios Archive
                   </h4>
                 </div>
 

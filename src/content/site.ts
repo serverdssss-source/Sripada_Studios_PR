@@ -144,33 +144,45 @@ export const expertise = [
   },
 ];
 
-// Each industry shows a tile cluster: six images around the Sripada mark, with two
-// cursor tags. Tiles: top-left, top-right, mid-left, mid-right, bottom-left, bottom-right.
-export const industries = [
-  {
-    title: "Healthcare",
-    items: ["Hospitals", "Clinics", "Healthcare Brands"],
-    tags: ["Hospitals", "Clinics"],
-    tiles: [
-      "/media/hearfon/hf-october-2.webp",
-      "/media/creatives/aanya.webp",
-      "/media/creatives/aryamba-ivf-creatives.webp",
-      "/media/hearfon/28-01-2026.webp",
-      "/media/creatives/wmn.webp",
-      "/media/hearfon/hf-october-4.webp",
-    ],
-  },
+// Each industry shows a tile cluster around the Sripada mark, with two tags.
+// Six tiles: top-left, top-right, mid-left, mid-right, bottom-left, bottom-right.
+// Up to three tiles form a triangle (top-left, mid-right, bottom-left), four a "Z"
+// (top-left, mid-left, mid-right, bottom-right); more than
+// six switch to a wider 4-2-4 layout (read left → right, top → bottom).
+// Tiles from a `…-logos/` folder show whole on white; anything else is cropped like a photo.
+export type Industry = {
+  title: string;
+  items: string[];
+  tags: [string, string];
+  tiles: string[];
+};
+
+export const industries: Industry[] = [
   {
     title: "Education",
     items: ["Preschools", "Educational Products", "Institutions"],
     tags: ["Preschools", "Institutions"],
     tiles: [
-      "/media/littlekidz/lk-2026-1.webp",
-      "/media/littlekidz/cc-01-2.webp",
-      "/media/littlekidz/01.webp",
-      "/media/littlekidz/lk-cc-05.webp",
-      "/media/littlekidz/lk-cc-04.webp",
-      "/media/littlekidz/lk-2026.webp",
+      "/media/education-logos/little-kidz.png",
+      "/media/education-logos/nirguna-acting-school.png",
+      "/media/education-logos/lilbeez.png",
+      "/media/education-logos/skill-incarnate.png",
+    ],
+  },
+  {
+    title: "Healthcare",
+    items: ["Hospitals", "Clinics", "Healthcare Brands"],
+    tags: ["Hospitals", "Clinics"],
+    tiles: [
+      "/media/healthcare-logos/hearfon.png",
+      "/media/healthcare-logos/aanya-hospitals.png",
+      "/media/healthcare-logos/aryamba.png",
+      "/media/healthcare-logos/wmn-doctors.png",
+      "/media/healthcare-logos/sripada-hospital.png",
+      "/media/healthcare-logos/tara-dental.png",
+      "/media/healthcare-logos/abhani.png",
+      "/media/healthcare-logos/wisden-clinics.png",
+      "/media/healthcare-logos/fitness-factory.png",
     ],
   },
   {
@@ -178,12 +190,14 @@ export const industries = [
     items: ["Films", "OTT", "Artists", "Events"],
     tags: ["Films", "Events"],
     tiles: [
-      "/media/films/ui.webp",
-      "/media/films/45.webp",
-      "/media/films/lm.webp",
-      "/media/films/sf.webp",
-      "/media/films/kaalapathar.webp",
-      "/media/films/ap.webp",
+      "/media/entertainment-logos/g-cinemas.png",
+      "/media/entertainment-logos/action-cut-entertainments.png",
+      "/media/entertainment-logos/tent-cinema.png",
+      "/media/entertainment-logos/nkr-tv.png",
+      "/media/entertainment-logos/total-kannada.png",
+      "/media/entertainment-logos/g9.png",
+      "/media/entertainment-logos/suraj-production.png",
+      "/media/entertainment-logos/hello-ramesh-speaking.png",
     ],
   },
   {
@@ -191,12 +205,10 @@ export const industries = [
     items: ["Beauty", "Wellness", "Food", "Lifestyle"],
     tags: ["Food", "Wellness"],
     tiles: [
-      "/media/creatives/samrat.webp",
-      "/media/creatives/svatantra.webp",
-      "/media/creatives/ff.webp",
-      "/media/kovedaa/kovedaa-designs.webp",
-      "/media/kovedaa/cc-01-1.webp",
-      "/media/kovedaa/kovedaa-designs-4.webp",
+      "/media/consumer-logos/samrat.png",
+      "/media/consumer-logos/nourishing-bites.png",
+      "/media/consumer-logos/mahiras.png",
+      "/media/consumer-logos/kovedaa.png",
     ],
   },
   {
@@ -448,30 +460,41 @@ export const teams = [
 // Logos in /public/clients are trimmed copies of /public/Client Logos, shown on the cream background.
 // width/height = optically balanced display size in px.
 export const clients = [
-  { name: "Action Cut Entertainments", logo: "/clients/action-cut-entertainments.png?v=2", width: 53, height: 69 },
-  { name: "Abhani Health and Daycare Centre", logo: "/clients/abhani-health-and-daycare-centre.png?v=2", width: 109, height: 33 },
-  { name: "Aikyam Weddings", logo: "/clients/aikyam-weddings.png?v=2", width: 59, height: 61 },
-  { name: "Angola Academy", logo: "/clients/angola-academy.png?v=2", width: 118, height: 30 },
-  { name: "BodhiAble", logo: "/clients/bodhiable.png?v=2", width: 93, height: 39 },
-  { name: "Chaitanya Convention Centre", logo: "/clients/chaitanya-convention-centre.png?v=2", width: 66, height: 54 },
-  { name: "The Copper Edge Eco Resort", logo: "/clients/the-copper-edge-eco-resort.png?v=2", width: 74, height: 49 },
-  { name: "Fitness Factory", logo: "/clients/fitness-factory.png?v=2", width: 116, height: 31 },
-  { name: "G Academy", logo: "/clients/g-academy.png?v=2", width: 94, height: 38 },
-  { name: "G Cinemas", logo: "/clients/g-cinemas.png?v=2", width: 84, height: 43 },
-  { name: "G9", logo: "/clients/g9.png?v=2", width: 49, height: 49 },
-  { name: "HearFon", logo: "/clients/hearfon.png?v=2", width: 118, height: 30 },
-  { name: "Kalpavriksha Wedding Venue", logo: "/clients/kalpavriksha-wedding-venue.png?v=2", width: 113, height: 32 },
-  { name: "Lil Beez", logo: "/clients/lil-beez.png?v=2", width: 89, height: 40 },
-  { name: "Little Kidz", logo: "/clients/little-kidz.png?v=2", width: 62, height: 58 },
-  { name: "Neferrtiti Weddings", logo: "/clients/neferrtiti-weddings.png?v=2", width: 53, height: 68 },
-  { name: "Nirguna Acting School", logo: "/clients/nirguna-acting-school.png?v=2", width: 49, height: 49 },
-  { name: "Hello Ramesh Speaking", logo: "/clients/hello-ramesh-speaking.png?v=2", width: 94, height: 38 },
-  { name: "Samrat Restaurant & Party Hall", logo: "/clients/samrat-restaurant-party-hall.png?v=2", width: 64, height: 38 },
-  { name: "Skill Incarnate", logo: "/clients/skill-incarnate.png?v=2", width: 129, height: 28 },
-  { name: "Sri Chakra Pearls & Jewellery", logo: "/clients/sri-chakra-pearls-jewellery.png?v=2", width: 65, height: 55 },
-  { name: "Suraj Production", logo: "/clients/suraj-production.png?v=2", width: 107, height: 34 },
-  { name: "Total Kannada", logo: "/clients/total-kannada.png?v=2", width: 68, height: 53 },
-  { name: "Wisden Clinics", logo: "/clients/wisden-clinics.png?v=2", width: 140, height: 26 },
+  { name: "Aanya Hospitals", logo: "/clients/aanya-hospitals.png?v=3", width: 91, height: 39 },
+  { name: "Little Kidz", logo: "/clients/little-kidz.png?v=3", width: 62, height: 58 },
+  { name: "G Cinemas", logo: "/clients/g-cinemas.png?v=3", width: 84, height: 43 },
+  { name: "Samrat Restaurant & Party Hall", logo: "/clients/samrat-restaurant-party-hall.png?v=3", width: 64, height: 38 },
+  { name: "Chaitanya Convention Centre", logo: "/clients/chaitanya-convention-centre.png?v=3", width: 66, height: 54 },
+  { name: "Aryamba Fertility & Research Center", logo: "/clients/aryamba-fertility-research-center.png?v=3", width: 65, height: 55 },
+  { name: "Lil Beez", logo: "/clients/lil-beez.png?v=3", width: 89, height: 40 },
+  { name: "Action Cut Entertainments", logo: "/clients/action-cut-entertainments.png?v=3", width: 53, height: 69 },
+  { name: "Kovedaa", logo: "/clients/kovedaa.png?v=3", width: 58, height: 62 },
+  { name: "The Copper Edge Eco Resort", logo: "/clients/the-copper-edge-eco-resort.png?v=3", width: 74, height: 49 },
+  { name: "HearFon", logo: "/clients/hearfon.png?v=3", width: 118, height: 30 },
+  { name: "Skill Incarnate", logo: "/clients/skill-incarnate.png?v=3", width: 129, height: 28 },
+  { name: "Tent Cinema", logo: "/clients/tent-cinema.png?v=3", width: 62, height: 58 },
+  { name: "Mahira's", logo: "/clients/mahira-s.png?v=3", width: 100, height: 36 },
+  { name: "Aikyam Weddings", logo: "/clients/aikyam-weddings.png?v=3", width: 59, height: 61 },
+  { name: "WMN Doctors", logo: "/clients/wmn-doctors.png?v=3", width: 99, height: 36 },
+  { name: "Nirguna Acting School", logo: "/clients/nirguna-acting-school.png?v=3", width: 49, height: 49 },
+  { name: "NKR TV", logo: "/clients/nkr-tv.png?v=3", width: 73, height: 49 },
+  { name: "Nourishing Bites", logo: "/clients/nourishing-bites.png?v=3", width: 120, height: 30 },
+  { name: "Neferrtiti Weddings", logo: "/clients/neferrtiti-weddings.png?v=3", width: 53, height: 68 },
+  { name: "Sripada Multispeciality Hospital", logo: "/clients/sripada-multispeciality-hospital.png?v=3", width: 124, height: 29 },
+  { name: "Angola Academy", logo: "/clients/angola-academy.png?v=3", width: 118, height: 30 },
+  { name: "Total Kannada", logo: "/clients/total-kannada.png?v=3", width: 68, height: 53 },
+  { name: "Samrat Residency", logo: "/clients/samrat-residency.png?v=3", width: 104, height: 35 },
+  { name: "Kalpavriksha Wedding Venue", logo: "/clients/kalpavriksha-wedding-venue.png?v=3", width: 113, height: 32 },
+  { name: "Tara Dental", logo: "/clients/tara-dental.png?v=3", width: 59, height: 61 },
+  { name: "G Academy", logo: "/clients/g-academy.png?v=3", width: 94, height: 38 },
+  { name: "G9", logo: "/clients/g9.png?v=3", width: 49, height: 49 },
+  { name: "Sri Chakra Pearls & Jewellery", logo: "/clients/sri-chakra-pearls-jewellery.png?v=3", width: 65, height: 55 },
+  { name: "Abhani Health and Daycare Centre", logo: "/clients/abhani-health-and-daycare-centre.png?v=3", width: 109, height: 33 },
+  { name: "BodhiAble", logo: "/clients/bodhiable.png?v=3", width: 93, height: 39 },
+  { name: "Suraj Production", logo: "/clients/suraj-production.png?v=3", width: 107, height: 34 },
+  { name: "Wisden Clinics", logo: "/clients/wisden-clinics.png?v=3", width: 140, height: 26 },
+  { name: "Hello Ramesh Speaking", logo: "/clients/hello-ramesh-speaking.png?v=3", width: 94, height: 38 },
+  { name: "Fitness Factory", logo: "/clients/fitness-factory.png?v=3", width: 116, height: 31 },
 ];
 
 export const clientCategories = [

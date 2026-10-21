@@ -12,7 +12,11 @@ export function ClientMarquee() {
         Trusted by brands across {clientCategories.join(" · ")}
       </p>
       <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
-        <ul className="animate-marquee flex w-max items-center [--logo-scale:0.8] hover:[animation-play-state:paused] sm:[--logo-scale:1]">
+        {/* Duration scales with the logo count so the speed stays the same as logos are added. */}
+        <ul
+          className="animate-marquee flex w-max items-center [--logo-scale:0.8] hover:[animation-play-state:paused] sm:[--logo-scale:1]"
+          style={{ animationDuration: `${clients.length * 1.9}s` }}
+        >
           {row.map((c, i) => (
             // Spacing as padding (not gap) so both halves are equal width and the -50% loop is seamless.
             <li
