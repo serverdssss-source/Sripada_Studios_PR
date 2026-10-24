@@ -15,9 +15,7 @@ const REST = [-14, 6, -3, 6, -14];
 export function FolderGallery({ gallery, client }: { gallery: string[]; client: string }) {
   const ref = useRef<HTMLDivElement>(null);
   // Always fill all 15 tiles; short galleries wrap round to their first images.
-  const columns = REST.map((_, c) =>
-    [0, 1, 2].map((k) => gallery[(c * 3 + k) % gallery.length]),
-  );
+  const columns = REST.map((_, c) => [0, 1, 2].map((k) => gallery[(c * 3 + k) % gallery.length]));
 
   useEffect(() => {
     const el = ref.current;

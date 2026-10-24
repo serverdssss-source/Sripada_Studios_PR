@@ -5,21 +5,25 @@
 
 export const site = {
   name: "Sripada Studios",
-  tagline: "Building Brands. Creating Influence. Driving Growth.",
+  tagline: "Connecting Iconic Brands with Cultural Events & Cinematic Media.",
   headline:
-    "A Digital & Creative Growth Studio Building Brands Through Strategy, Storytelling & Performance.",
+    "Sripada Studios is the ultimate event & digital partner bridging brands, high-visibility IP festivals, and top-tier content creation.",
   location: "Bengaluru",
   heroImage: "/images/hero.jpg",
   aboutImage: "/images/about-studio.jpg",
-  teamImage: "/images/team.jpg",
+  teamImage: "/media/team/teams.webp",
   // TODO: confirm public contact details
   contact: {
-    email: "hello@sripadastudios.in",
-    pressEmail: "press@sripadastudios.in",
+    email: "connect@sripadastudios.in",
+    pressEmail: "connect@sripadastudios.in",
     phone: "+91 00000 00000",
   },
-  // TODO: swap for a scheduling link (e.g. Calendly) once available
-  bookCallHref: "#contact",
+  // Hero calls to action, one per audience.
+  // TODO: point each at its own form or page once they exist.
+  heroCtas: [
+    { audience: "For Brands", label: "Sponsor an Event", href: "#contact" },
+    { audience: "For Event Creators / Partners", label: "Collaborate with Us", href: "#contact" },
+  ],
   // TODO: replace with real profile URLs
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/" },
@@ -29,13 +33,12 @@ export const site = {
 };
 
 export const nav = [
-  { label: "About", href: "#about" },
-  { label: "Industries", href: "#industries" },
-  { label: "Work", href: "#work" },
-  { label: "Expertise", href: "#expertise" },
+  { label: "Value Proposition", href: "#value-proposition" },
+  { label: "Sponsor", href: "#flagship" },
+  { label: "Case Study", href: "#sripada-case-study" },
   { label: "Founders", href: "#founders" },
-  { label: "Journey", href: "#journey" },
-  { label: "Media", href: "#media" },
+  { label: "Integrations", href: "#brand-integrations" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export const pillars = ["Strategy", "Content", "Performance", "Digital Experiences"];
@@ -67,15 +70,17 @@ export type Founder = {
   points: string[];
   image: string;
   imagePosition?: string;
+  /** Portrait with the background removed (transparent), for the founder cards. */
+  cutout: string;
   profileHref: string;
 };
 
 export const founders: Founder[] = [
   {
-    name: "PV Phani Srivatsa",
+    name: "Phani Srivatsa",
     initials: "PS",
-    role: "Founder & CEO / Proprietor",
-    bio: "A creative entrepreneur focused on building Sripada Studios into a strong digital and creative ecosystem.",
+    role: "Founder & Strategist",
+    bio: "Founder Phani Srivatsa, Strategist.",
     points: [
       "Entrepreneur & Digital Business Leader",
       "Creative & Brand Strategy",
@@ -85,13 +90,14 @@ export const founders: Founder[] = [
     ],
     image: "/images/phani.webp",
     imagePosition: "object-[center_25%]",
+    cutout: "/images/founders/phani-cutout.webp",
     profileHref: "#contact", // TODO: link to full profile
   },
   {
     name: "Sathwik NJ",
     initials: "SN",
-    role: "Business Head | Performance Marketing & Strategy",
-    bio: "6+ years of experience across Performance Marketing, Digital Strategy and Business Growth, working across E-commerce, B2B and B2C brands.",
+    role: "Co-Founder",
+    bio: "Co-Founder Sathwik NJ.",
     points: [
       "6+ Years in Performance Marketing & Strategy",
       "20+ Clients",
@@ -101,6 +107,7 @@ export const founders: Founder[] = [
     ],
     image: "/images/team-satwik.jpg",
     imagePosition: "object-[center_10%]",
+    cutout: "/images/founders/sathwik-cutout.webp",
     profileHref: "#contact", // TODO: link to full profile
   },
 ];
@@ -463,37 +470,97 @@ export const clients = [
   { name: "Aanya Hospitals", logo: "/clients/aanya-hospitals.png?v=3", width: 91, height: 39 },
   { name: "Little Kidz", logo: "/clients/little-kidz.png?v=3", width: 62, height: 58 },
   { name: "G Cinemas", logo: "/clients/g-cinemas.png?v=3", width: 84, height: 43 },
-  { name: "Samrat Restaurant & Party Hall", logo: "/clients/samrat-restaurant-party-hall.png?v=3", width: 64, height: 38 },
-  { name: "Chaitanya Convention Centre", logo: "/clients/chaitanya-convention-centre.png?v=3", width: 66, height: 54 },
-  { name: "Aryamba Fertility & Research Center", logo: "/clients/aryamba-fertility-research-center.png?v=3", width: 65, height: 55 },
+  {
+    name: "Samrat Restaurant & Party Hall",
+    logo: "/clients/samrat-restaurant-party-hall.png?v=3",
+    width: 64,
+    height: 38,
+  },
+  {
+    name: "Chaitanya Convention Centre",
+    logo: "/clients/chaitanya-convention-centre.png?v=3",
+    width: 66,
+    height: 54,
+  },
+  {
+    name: "Aryamba Fertility & Research Center",
+    logo: "/clients/aryamba-fertility-research-center.png?v=3",
+    width: 65,
+    height: 55,
+  },
   { name: "Lil Beez", logo: "/clients/lil-beez.png?v=3", width: 89, height: 40 },
-  { name: "Action Cut Entertainments", logo: "/clients/action-cut-entertainments.png?v=3", width: 53, height: 69 },
+  {
+    name: "Action Cut Entertainments",
+    logo: "/clients/action-cut-entertainments.png?v=3",
+    width: 53,
+    height: 69,
+  },
   { name: "Kovedaa", logo: "/clients/kovedaa.png?v=3", width: 58, height: 62 },
-  { name: "The Copper Edge Eco Resort", logo: "/clients/the-copper-edge-eco-resort.png?v=3", width: 74, height: 49 },
+  {
+    name: "The Copper Edge Eco Resort",
+    logo: "/clients/the-copper-edge-eco-resort.png?v=3",
+    width: 74,
+    height: 49,
+  },
   { name: "HearFon", logo: "/clients/hearfon.png?v=3", width: 118, height: 30 },
   { name: "Skill Incarnate", logo: "/clients/skill-incarnate.png?v=3", width: 129, height: 28 },
   { name: "Tent Cinema", logo: "/clients/tent-cinema.png?v=3", width: 62, height: 58 },
   { name: "Mahira's", logo: "/clients/mahira-s.png?v=3", width: 100, height: 36 },
   { name: "Aikyam Weddings", logo: "/clients/aikyam-weddings.png?v=3", width: 59, height: 61 },
   { name: "WMN Doctors", logo: "/clients/wmn-doctors.png?v=3", width: 99, height: 36 },
-  { name: "Nirguna Acting School", logo: "/clients/nirguna-acting-school.png?v=3", width: 49, height: 49 },
+  {
+    name: "Nirguna Acting School",
+    logo: "/clients/nirguna-acting-school.png?v=3",
+    width: 49,
+    height: 49,
+  },
   { name: "NKR TV", logo: "/clients/nkr-tv.png?v=3", width: 73, height: 49 },
   { name: "Nourishing Bites", logo: "/clients/nourishing-bites.png?v=3", width: 120, height: 30 },
-  { name: "Neferrtiti Weddings", logo: "/clients/neferrtiti-weddings.png?v=3", width: 53, height: 68 },
-  { name: "Sripada Multispeciality Hospital", logo: "/clients/sripada-multispeciality-hospital.png?v=3", width: 124, height: 29 },
+  {
+    name: "Neferrtiti Weddings",
+    logo: "/clients/neferrtiti-weddings.png?v=3",
+    width: 53,
+    height: 68,
+  },
+  {
+    name: "Sripada Multispeciality Hospital",
+    logo: "/clients/sripada-multispeciality-hospital.png?v=3",
+    width: 124,
+    height: 29,
+  },
   { name: "Angola Academy", logo: "/clients/angola-academy.png?v=3", width: 118, height: 30 },
   { name: "Total Kannada", logo: "/clients/total-kannada.png?v=3", width: 68, height: 53 },
   { name: "Samrat Residency", logo: "/clients/samrat-residency.png?v=3", width: 104, height: 35 },
-  { name: "Kalpavriksha Wedding Venue", logo: "/clients/kalpavriksha-wedding-venue.png?v=3", width: 113, height: 32 },
+  {
+    name: "Kalpavriksha Wedding Venue",
+    logo: "/clients/kalpavriksha-wedding-venue.png?v=3",
+    width: 113,
+    height: 32,
+  },
   { name: "Tara Dental", logo: "/clients/tara-dental.png?v=3", width: 59, height: 61 },
   { name: "G Academy", logo: "/clients/g-academy.png?v=3", width: 94, height: 38 },
   { name: "G9", logo: "/clients/g9.png?v=3", width: 49, height: 49 },
-  { name: "Sri Chakra Pearls & Jewellery", logo: "/clients/sri-chakra-pearls-jewellery.png?v=3", width: 65, height: 55 },
-  { name: "Abhani Health and Daycare Centre", logo: "/clients/abhani-health-and-daycare-centre.png?v=3", width: 109, height: 33 },
+  {
+    name: "Sri Chakra Pearls & Jewellery",
+    logo: "/clients/sri-chakra-pearls-jewellery.png?v=3",
+    width: 65,
+    height: 55,
+  },
+  {
+    name: "Abhani Health and Daycare Centre",
+    logo: "/clients/abhani-health-and-daycare-centre.png?v=3",
+    width: 109,
+    height: 33,
+  },
   { name: "BodhiAble", logo: "/clients/bodhiable.png?v=3", width: 93, height: 39 },
   { name: "Suraj Production", logo: "/clients/suraj-production.png?v=3", width: 107, height: 34 },
   { name: "Wisden Clinics", logo: "/clients/wisden-clinics.png?v=3", width: 140, height: 26 },
-  { name: "Hello Ramesh Speaking", logo: "/clients/hello-ramesh-speaking.png?v=3", width: 94, height: 38 },
+  {
+    name: "Hello Ramesh Speaking",
+    logo: "/clients/hello-ramesh-speaking.png?v=3",
+    width: 94,
+    height: 38,
+  },
   { name: "Fitness Factory", logo: "/clients/fitness-factory.png?v=3", width: 116, height: 31 },
 ];
 

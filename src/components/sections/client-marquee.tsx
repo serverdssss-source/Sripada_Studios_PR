@@ -7,7 +7,10 @@ export function ClientMarquee() {
   const row = [...clients, ...clients];
 
   return (
-    <section aria-label="Brands we've worked with" className="bg-cream text-ink border-ink/10 border-b py-10">
+    <section
+      aria-label="Brands we've worked with"
+      className="bg-cream text-ink border-ink/10 border-b py-10"
+    >
       <p className="text-ink/50 mb-8 px-4 text-center text-xs tracking-[0.25em] uppercase">
         Trusted by brands across {clientCategories.join(" · ")}
       </p>

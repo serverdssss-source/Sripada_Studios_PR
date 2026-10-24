@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 /** Founder quote on cream background without carousel rotation or progress bar indicators. */
 export function FounderVoice() {
   return (
-    <Section id="voice" tone="cream" className="text-center py-6! sm:py-8! md:py-10!">
+    <Section id="voice" tone="cream" className="py-6! text-center sm:py-8! md:py-10!">
       <Reveal>
         <p className="mb-2 text-xs font-medium tracking-[0.25em] uppercase opacity-60">
           {founderVoice.eyebrow}

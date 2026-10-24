@@ -1,24 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette taken from the main Sripada Studios site (sswebsite). */
-  --color-ink: #081816;
+  /*
+   * Site roles mapped onto the Sripada Studios brand palette
+   * (teal #216974 · neon lime #adfa3b · green #83cd15 · night #0b0b0f). Components
+   * use these role names, so changing a value here recolours the whole site.
+   */
+  --color-ink: #0b0b0f;
   /* Translucent so the site-wide gradient shows through panels and rules. */
-  --color-ink-soft: rgb(8 24 22 / 0.3);
-  --color-ink-line: rgb(255 250 242 / 0.14);
+  --color-ink-soft: rgb(11 11 15 / 0.3);
+  --color-ink-line: rgb(243 248 248 / 0.14);
   --color-teal-deep: #0f3f45;
   --color-teal: #216974;
-  --color-paper: #fffaf2;
-  --color-paper-dim: #f0f9f8;
-  --color-cream: #fffefa;
-  --color-muted: #39545a;
-  --color-line: #c8dee2;
-  --color-brand: #54c4b6;
-  --color-brand-soft: #84efe0;
+  --color-paper: #f3f8f8;
+  --color-paper-dim: #e6f1f2;
+  --color-cream: #f3f8f8;
+  --color-muted: #3f5457;
+  --color-line: #d4e6e8;
+  --color-brand: #2e8c99;
+  --color-brand-soft: #adfa3b;
 
-  --font-sans: var(--font-poppins);
+  /* Sripada Studios brand palette. */
+  --color-brand-teal: #216974;
+  /* Lighter tint of the brand teal, for accent text and hovers on black. */
+  --color-brand-teal-light: #2e8c99;
+  --color-brand-lime: #adfa3b;
+  --color-brand-green: #83cd15;
+  --color-brand-night: #0b0b0f;
+  /* Off-white with a hint of brand teal, for light sections. */
+  --color-brand-mist: #f3f8f8;
+
+  --font-sans: var(--font-geom);
   --font-serif: var(--font-playfair);
-  --font-mono: var(--font-poppins);
+  --font-mono: var(--font-geom);
 
   --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -34,8 +48,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-brand);
-  color: var(--color-ink);
+  background: var(--color-brand-lime);
+  color: var(--color-brand-night);
 }
 
 /* Horizontal scrollers: hide the bar but keep native scrolling. */
@@ -79,6 +93,27 @@ body {
   animation: fade-up 1s var(--ease-premium) both;
 }
 
+.showreel-frame {
+  position: relative;
+  display: inline-block;
+  width: 1.4em;
+  height: 0.5em;
+  margin-inline: 0.08em;
+  overflow: hidden;
+  vertical-align: 0.02em;
+  border-radius: 0.04em;
+}
+.showreel-still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: center / cover no-repeat url("/media/showreel/concert-poster.webp");
+}
+/* Once the live video sits over the frame, hide the still so its edges can't peek out. */
+.is-live > .showreel-still {
+  visibility: hidden;
+}
 /*
  * Hero card fan (static fallback). Each card sets --off (signed distance from
  * the centre card), --y (arc drop), --r (tilt) and --d (stagger) inline. Cards
@@ -145,7 +180,6 @@ body {
   }
 }
 
-
 /* Scroll reveal, toggled by <Reveal>. Content stays visible without JS. */
 .js [data-reveal] {
   opacity: 0;
@@ -155,6 +189,56 @@ body {
     transform 1s var(--ease-premium);
 }
 .js [data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+}
+/* Decorative star: a slow float with a gentle sway and a soft twinkle. */
+@keyframes star-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-10px) rotate(8deg) scale(1.06);
+  }
+  50% {
+    transform: translateY(-4px) rotate(-4deg) scale(0.97);
+  }
+  75% {
+    transform: translateY(-12px) rotate(5deg) scale(1.04);
+  }
+}
+.star-float {
+  animation: star-float 5s ease-in-out infinite;
+  filter: drop-shadow(0 6px 10px rgb(245 180 20 / 0.35));
+}
+
+/* Die-cut sticker text: a thick white outline drawn behind the letters (so it merges between
+   them, like a cut-out) and a soft shadow lifting it off the page. */
+.sticker-text {
+  -webkit-text-stroke: 0.16em #fff;
+  paint-order: stroke fill;
+  filter: drop-shadow(0 0.05em 0.06em rgb(11 11 15 / 0.22));
+}
+
+/* Slow spin for round text badges. */
+@keyframes badge-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.badge-spin {
+  animation: badge-spin 18s linear infinite;
+}
+
+/* Pop variant: rises from well below and springs slightly past its resting place. */
+.js [data-reveal][data-effect="pop"] {
+  transform: translateY(160px) scale(0.94);
+  transition:
+    opacity 0.6s var(--ease-premium),
+    transform 1.1s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.js [data-reveal="in"][data-effect="pop"] {
   opacity: 1;
   transform: none;
 }
@@ -169,7 +253,12 @@ body {
   .fan-deal {
     animation: none;
   }
-  .js [data-reveal] {
+  .star-float,
+  .badge-spin {
+    animation: none;
+  }
+  .js [data-reveal],
+  .js [data-reveal][data-effect="pop"] {
     opacity: 1;
     transform: none;
     transition: none;

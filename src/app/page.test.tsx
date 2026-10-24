@@ -6,7 +6,7 @@ import Home from "./page";
 describe("Home", () => {
   it("renders the hero headline", () => {
     render(<Home />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/Building Brands/);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/Connecting Iconic\s*Brands/);
   });
 
   it("has a section for every nav anchor plus contact", () => {
@@ -18,6 +18,6 @@ describe("Home", () => {
 
   it("renders the enquiry form", () => {
     render(<Home />);
-    expect(screen.getByRole("button", { name: /send project enquiry/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /request pitch deck/i })).toBeInTheDocument();
   });
 });

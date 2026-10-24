@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Poppins } from "next/font/google";
+import { Geom, Playfair_Display } from "next/font/google";
 import { site } from "@/content/site";
 import "./globals.css";
 
-// The only two typefaces on the site: Poppins (UI/body/headings) and
-// Playfair Display (serif accents).
-const poppins = Poppins({
-  variable: "--font-poppins",
+// The only two typefaces on the site: Geom (UI/body/headings, variable weight
+// with italics) and Playfair Display (serif accents).
+const geom = Geom({
+  variable: "--font-geom",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 const playfair = Playfair_Display({
@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: `${site.name} — Digital & Creative Growth Studio, ${site.location}`,
+  title: `${site.name} — Cultural Events & Cinematic Media, ${site.location}`,
   description: `${site.name}: ${site.headline}`,
   openGraph: {
     title: site.name,
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#081816",
+  themeColor: "#0b0b0f",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -39,21 +39,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       // The inline script adds `js` before paint so scroll-reveal never hides content without JS.
       suppressHydrationWarning
-      className={`${poppins.variable} ${playfair.variable} antialiased`}
+      className={`${geom.variable} ${playfair.variable} antialiased`}
     >
       <head>
         <script
           dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
         />
         <noscript>
-          <style>{".slot-static{visibility:visible!important}.travel-layer{display:none}"}</style>
+          <style>
+            {
+              ".slot-static{visibility:visible!important}.travel-layer{display:none}.showreel-experience{height:100svh!important}"
+            }
+          </style>
         </noscript>
       </head>
       <body className="bg-ink text-paper min-h-screen font-sans">
         {/* Site-wide brand gradient, pinned so every section shares one seamless backdrop. */}
         <div
           aria-hidden
-          className="from-teal-deep via-teal to-brand pointer-events-none fixed inset-0 -z-10 bg-linear-to-br"
+          className="from-ink via-teal-deep to-teal pointer-events-none fixed inset-0 -z-10 bg-linear-to-br"
         />
         {children}
       </body>

@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { milestones } from "@/content/site";
+import Image from "next/image";
 import { Reveal } from "@/components/reveal";
+import { StickerBurst } from "@/components/sticker-burst";
 import { cn } from "@/lib/cn";
 
 // Folder tab's sloped right edge with rounded shoulder and concave foot
@@ -97,22 +99,25 @@ export function Milestones() {
   };
 
   return (
-    <div
-      ref={sectionRef}
-      id="journey"
-      className="relative min-h-[260vh] bg-cream text-ink"
-    >
+    <div ref={sectionRef} id="journey" className="text-ink relative min-h-[260vh] bg-[#e8f6f3]">
       {/* Sticky viewport frame: vertically balanced, with clearance for fixed site header */}
-      <div className="sticky top-0 flex min-h-screen flex-col justify-center items-center overflow-hidden px-4 pt-20 pb-8 sm:px-8">
+      <div className="sticky top-0 flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-8 sm:px-8">
         {/* Section Header & Selector Pills */}
-        <div className="flex w-full max-w-4xl flex-col items-center text-center">
-          <Reveal className="mb-2">
-            <p className="mb-1.5 text-xs font-medium tracking-[0.25em] uppercase text-teal">
-              Milestones
-            </p>
-            <h2 className="text-[clamp(1.85rem,3.8vw,3.25rem)] leading-none font-medium tracking-[-0.04em] text-ink">
+        <div className="flex w-full max-w-6xl flex-col items-center text-center">
+          {/* Heading in the same die-cut sticker type as "THE FOUNDERS", with the floating star. */}
+          {/* One line: the heading is ~16.5em wide, so it's sized to the screen width (capped). */}
+          <Reveal className="relative mb-2 inline-block text-[length:min(calc((100vw-2rem)/17),4.25rem)]">
+            <h2 className="sticker-text text-brand-night leading-[0.9] font-bold tracking-[-0.06em] whitespace-nowrap uppercase">
               The Sripada Studios Journey
             </h2>
+            <Image
+              src="/elements/golden-shiny-starburst.png"
+              alt=""
+              aria-hidden
+              width={160}
+              height={160}
+              className="star-float pointer-events-none absolute -top-[0.45em] -right-[0.35em] w-[0.6em]"
+            />
           </Reveal>
 
           {/* Quick Step Selector Pills with generous clearance so cards never overlap */}
@@ -124,10 +129,10 @@ export function Milestones() {
                 onClick={() => goToStep(i)}
                 aria-label={`Jump to Milestone ${i + 1}`}
                 className={cn(
-                  "cursor-pointer rounded-full px-3 py-1 text-xs font-mono transition-all duration-300",
+                  "cursor-pointer rounded-full px-3 py-1 font-mono text-xs transition-all duration-300",
                   activeIdx === i
-                    ? "bg-teal text-white font-bold shadow-md shadow-teal/20 scale-105"
-                    : "bg-ink/5 text-muted hover:bg-ink/10 hover:text-ink",
+                    ? "scale-105 bg-[#8b5cf6] font-bold text-white shadow-md shadow-[#8b5cf6]/30"
+                    : "border-ink/10 text-ink/60 hover:text-ink border bg-white hover:border-[#8b5cf6]/40",
                 )}
               >
                 {String(i + 1).padStart(2, "0")}
@@ -146,7 +151,7 @@ export function Milestones() {
               badgePos.taglinePos,
             )}
           >
-            <div className="rounded-full bg-linear-to-b from-[#fdf7ed] via-[#f3e1c4] to-[#e4c084] px-3.5 py-1 text-[11px] sm:text-xs font-semibold text-[#3d2908] shadow-md shadow-[#e4c084]/30">
+            <div className="rounded-full border-[3px] border-white bg-[#8b5cf6] px-3.5 py-1 text-[11px] font-bold text-white shadow-[0_8px_16px_-6px_rgb(11_11_15/0.35)] sm:text-xs">
               {currentMilestone.tagline}
             </div>
           </div>
@@ -154,34 +159,40 @@ export function Milestones() {
           <div
             key={`badge-quote-${activeIdx}`}
             className={cn(
-              "pointer-events-none absolute z-40 hidden sm:block transition-all duration-500 ease-out",
+              "pointer-events-none absolute z-40 hidden transition-all duration-500 ease-out sm:block",
               badgePos.quotePos,
             )}
           >
-            <div className="rounded-full bg-linear-to-b from-[#fdf7ed] via-[#f3e1c4] to-[#e4c084] px-3.5 py-1 text-[11px] sm:text-xs font-semibold text-[#3d2908] shadow-md shadow-[#e4c084]/30">
+            <div className="text-brand-night rounded-full border-[3px] border-white bg-[#54c4b6] px-3.5 py-1 text-[11px] font-bold shadow-[0_8px_16px_-6px_rgb(11_11_15/0.35)] sm:text-xs">
               {currentMilestone.quote}
             </div>
           </div>
 
           {/* Folder Tab matching Work/Impact section */}
           <div className="relative z-10 -mb-0.5 flex w-fit">
-            <div className="rounded-tl-2xl bg-linear-to-b from-[#0c353b] to-[#124850] py-2.5 pr-2 pl-6 font-mono text-[11px] sm:text-xs font-semibold tracking-wider text-paper">
+            <div className="text-paper rounded-tl-2xl bg-[#1b5a64] py-2.5 pr-2 pl-6 font-mono text-[11px] font-semibold tracking-wider sm:text-xs">
               SRIPADA STUDIOS ARCHIVE · 2019–NOW
             </div>
             <svg
               aria-hidden
               viewBox="0 0 40 48"
               preserveAspectRatio="none"
-              className="-ml-px h-auto w-10 text-[#0c353b] fill-current"
+              className="-ml-px h-auto w-10 fill-current text-[#1b5a64]"
             >
               <path d={TAB_EAR} />
             </svg>
           </div>
 
+          {/* Aqua starburst stuck on the folder's bottom-left corner, like the other sections. */}
+          <StickerBurst
+            color="#54c4b6"
+            className="pointer-events-none absolute -bottom-7 -left-6 z-40 w-14 md:-bottom-9 md:-left-9 md:w-20"
+          />
+
           {/* Folder Body matching Work/Impact section */}
-          <div className="relative h-[290px] sm:h-[320px] md:h-[340px] w-full rounded-3xl rounded-tl-none border border-teal/20 bg-linear-to-b from-[#0c353b] via-[#124850] to-[#195963] shadow-2xl">
+          <div className="relative h-[290px] w-full rounded-3xl rounded-tl-none border border-white/10 bg-linear-to-b from-[#1b5a64] via-[#216974] to-[#2a7f8b] shadow-2xl sm:h-[320px] md:h-[340px]">
             {/* Pocket Cards Emerging Out of the File — tuned so it leaves clean clearance below selector pills */}
-            <div className="absolute inset-x-3 sm:inset-x-6 top-8 z-10">
+            <div className="absolute inset-x-3 top-8 z-10 sm:inset-x-6">
               {milestones.map((m, i) => {
                 const initialTilt = TILT_ANGLES[i % TILT_ANGLES.length];
                 let translateY = 50;
@@ -229,37 +240,35 @@ export function Milestones() {
                       transformOrigin: "center bottom",
                     }}
                   >
-                    <div className="rounded-2xl sm:rounded-3xl border border-ink/10 bg-white p-4 sm:p-6 text-ink shadow-2xl transition-all duration-300">
+                    <div className="border-ink/10 text-ink rounded-2xl border bg-white p-4 shadow-2xl transition-all duration-300 sm:rounded-3xl sm:p-6">
                       {/* Card Header */}
                       <div className="flex items-center justify-between">
-                        <span className="rounded-full bg-teal/10 px-2.5 py-0.5 font-mono text-[11px] sm:text-xs font-bold tracking-wider text-teal uppercase">
+                        <span className="rounded-full bg-[#8b5cf6]/10 px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider text-[#8b5cf6] uppercase sm:text-xs">
                           Phase {String(i + 1).padStart(2, "0")}
                         </span>
 
                         {m.isCurrent ? (
-                          <span className="flex items-center gap-1.5 rounded-full border border-teal/20 bg-teal/10 px-2.5 py-0.5 text-[11px] sm:text-xs font-medium text-teal uppercase">
-                            <span className="h-2 w-2 rounded-full bg-teal animate-ping" />
+                          <span className="flex items-center gap-1.5 rounded-full border border-[#54c4b6]/40 bg-[#54c4b6]/15 px-2.5 py-0.5 text-[11px] font-semibold text-[#216974] uppercase sm:text-xs">
+                            <span className="h-2 w-2 animate-ping rounded-full bg-[#05b8a0]" />
                             Active Era
                           </span>
                         ) : (
-                          <span className="font-mono text-xs text-muted">
-                            Milestone #{i + 1}
-                          </span>
+                          <span className="text-muted font-mono text-xs">Milestone #{i + 1}</span>
                         )}
                       </div>
 
                       {/* Card Title */}
-                      <h3 className="mt-2.5 text-lg sm:text-2xl font-medium tracking-tight text-ink">
+                      <h3 className="text-ink mt-2.5 text-lg font-bold tracking-[-0.03em] sm:text-2xl">
                         {m.phase}
                       </h3>
 
                       {/* Card Detail */}
-                      <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-muted line-clamp-2 sm:line-clamp-none">
+                      <p className="text-muted mt-1.5 line-clamp-2 text-xs leading-relaxed sm:line-clamp-none sm:text-sm">
                         {m.detail}
                       </p>
 
                       {/* Card Footer Tag */}
-                      <div className="mt-3 flex items-center justify-between border-t border-ink/10 pt-2.5 text-[11px] font-mono text-muted/70">
+                      <div className="border-ink/10 text-muted/70 mt-3 flex items-center justify-between border-t pt-2.5 font-mono text-[11px]">
                         <span>Sripada Studios</span>
                         <span>{m.isCurrent ? "Present Day" : `Step ${i + 1} of 6`}</span>
                       </div>
@@ -270,13 +279,13 @@ export function Milestones() {
             </div>
 
             {/* Front Pocket Flap (with strict top-to-bottom gradient) */}
-            <div className="absolute inset-x-0 bottom-0 z-30 h-[160px] sm:h-[180px] md:h-[195px] rounded-b-3xl rounded-t-2xl border-t border-white/20 bg-linear-to-b from-[#185e6a] via-[#217582] to-[#3cb5a5] p-4 sm:p-6 shadow-2xl">
+            <div className="absolute inset-x-0 bottom-0 z-30 h-[160px] rounded-t-2xl rounded-b-3xl border-t border-white/25 bg-linear-to-b from-[#8b5cf6] to-[#7546e8] p-4 shadow-2xl sm:h-[180px] sm:p-6 md:h-[195px]">
               <div className="flex h-full flex-col justify-between">
                 <div>
-                  <span className="font-mono text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-brand-soft">
+                  <span className="font-mono text-[10px] font-semibold tracking-[0.25em] text-white/75 uppercase sm:text-xs">
                     Milestones Dossier
                   </span>
-                  <h4 className="mt-0.5 text-lg sm:text-xl md:text-2xl font-medium tracking-tight text-paper">
+                  <h4 className="mt-0.5 text-lg font-bold tracking-[-0.03em] text-white uppercase sm:text-xl md:text-2xl">
                     The Sripada Studios Archive
                   </h4>
                 </div>
@@ -289,16 +298,16 @@ export function Milestones() {
                       style={{ width: `${((activeIdx + 1) / totalCards) * 100}%` }}
                     />
                   </div>
-                  <span className="font-mono text-xs font-medium text-white/80 shrink-0">
+                  <span className="shrink-0 font-mono text-xs font-medium text-white/80">
                     {String(activeIdx + 1).padStart(2, "0")} / {String(totalCards).padStart(2, "0")}
                   </span>
-                  <div className="flex items-center gap-1.5 shrink-0">
+                  <div className="flex shrink-0 items-center gap-1.5">
                     <button
                       type="button"
                       onClick={() => goToStep(Math.max(0, activeIdx - 1))}
                       disabled={activeIdx === 0}
                       aria-label="Previous milestone"
-                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/25 disabled:opacity-25 cursor-pointer text-sm transition-colors"
+                      className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-white/10 text-sm text-white transition-colors hover:bg-white/25 disabled:opacity-25"
                     >
                       ←
                     </button>
@@ -307,7 +316,7 @@ export function Milestones() {
                       onClick={() => goToStep(Math.min(totalCards - 1, activeIdx + 1))}
                       disabled={activeIdx === totalCards - 1}
                       aria-label="Next milestone"
-                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/25 disabled:opacity-25 cursor-pointer text-sm transition-colors"
+                      className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-white/10 text-sm text-white transition-colors hover:bg-white/25 disabled:opacity-25"
                     >
                       →
                     </button>
@@ -319,7 +328,7 @@ export function Milestones() {
         </div>
 
         {/* Bottom Helper Note */}
-        <p className="mt-6 text-center text-[11px] font-mono tracking-widest text-muted/60 uppercase">
+        <p className="text-muted/60 mt-6 text-center font-mono text-[11px] tracking-widest uppercase">
           Scroll to pull milestones out of file
         </p>
       </div>

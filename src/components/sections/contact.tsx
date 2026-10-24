@@ -1,114 +1,144 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { expertise, site } from "@/content/site";
-import { Accent } from "@/components/ui";
+import { site } from "@/content/site";
+import Image from "next/image";
+import { StickerBurst } from "@/components/sticker-burst";
 import { cn } from "@/lib/cn";
 
-const budgets = ["Under ₹1L / month", "₹1L – ₹3L / month", "₹3L – ₹10L / month", "₹10L+ / month"];
+type EnquiryType = "brand" | "event";
 
 const field =
-  "border-paper/20 focus:border-brand placeholder:text-paper/35 w-full border-b bg-transparent py-4 text-lg outline-none transition-colors";
+  "border-ink/15 placeholder:text-ink/40 text-ink w-full border-b bg-transparent py-4 text-lg outline-none transition-colors focus:border-[#216974]";
 
 export function Contact() {
-  const [type, setType] = useState<"project" | "press">("project");
-  const [services, setServices] = useState<string[]>([]);
+  const [type, setType] = useState<EnquiryType>("brand");
   const [sent, setSent] = useState(false);
 
-  const toggle = (s: string) =>
-    setServices((cur) => (cur.includes(s) ? cur.filter((x) => x !== s) : [...cur, s]));
-
-  // TODO: post to a form backend/CRM (e.g. Resend, HubSpot) instead of opening the mail app.
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const to = type === "press" ? site.contact.pressEmail : site.contact.email;
-    const subject = `${type === "press" ? "Media / PR enquiry" : "New project"} — ${data.get("name")}`;
+    const isBrand = type === "brand";
+    const subject = isBrand
+      ? `Request Pitch Deck - ${data.get("name")}`
+      : `Event Pitch / Collaboration Proposal - ${data.get("name")}`;
     const body = [
       `Name: ${data.get("name")}`,
       `Email: ${data.get("email")}`,
-      `Company: ${data.get("company") || "-"}`,
-      type === "project" && `Services: ${services.join(", ") || "-"}`,
-      type === "project" && `Budget: ${data.get("budget") || "-"}`,
+      `Company / Organization: ${data.get("organization") || "-"}`,
+      isBrand && `Event Interest: ${data.get("eventInterest") || "-"}`,
+      isBrand && `Preferred Sponsorship Budget Bracket: ${data.get("budget") || "-"}`,
       "",
       `${data.get("message")}`,
     ]
-      .filter((l) => l !== false)
+      .filter((line) => line !== false)
       .join("\n");
-    window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = `mailto:${site.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSent(true);
   }
 
   return (
-    <section id="contact" className="grain relative overflow-hidden px-4 py-24 sm:px-8 md:py-36">
-      <div
-        aria-hidden
-        className="bg-brand/15 pointer-events-none absolute -top-40 -right-40 h-[40rem] w-[40rem] rounded-full blur-[140px]"
-      />
+    // Soft aqua (a light tint of the brand teal), so it stands apart from the off-white
+    // section above it.
+    <section
+      id="contact"
+      className="text-ink relative overflow-hidden bg-[#e8f6f3] px-4 py-24 sm:px-8 md:py-32"
+    >
       <div className="relative mx-auto grid max-w-7xl gap-16 lg:grid-cols-[1fr_1.1fr]">
         <div className="flex flex-col justify-between gap-12">
           <div>
-            <p className="mb-6 flex items-center gap-3 text-xs font-medium tracking-[0.25em] uppercase opacity-60">
-              Now taking new projects
+            {/* Label as a small die-cut sticker pill, then the heading in the site's sticker type. */}
+            <p className="mb-8 inline-block -rotate-2 rounded-full border-[3px] border-white bg-[#216974] px-4 py-1.5 text-[0.65rem] font-bold tracking-[0.12em] text-white uppercase shadow-[0_8px_16px_-6px_rgb(11_11_15/0.3)] sm:text-xs sm:tracking-[0.18em]">
+              Interactive Contact &amp; Onboarding Hub
             </p>
-            <h2 className="text-[clamp(3rem,5.5vw,4.5rem)] leading-[0.98] font-medium tracking-[-0.04em]">
-              Have a brand <br />
-              worth <Accent>building?</Accent>
-            </h2>
-            <p className="text-paper/65 mt-8 max-w-md text-lg leading-relaxed">
-              Let&apos;s turn your next idea into something people see, remember and act on. We
-              reply within one working day.
+            <div className="relative inline-block text-[clamp(2.75rem,6vw,5rem)]">
+              <h2 className="sticker-text text-brand-night leading-[0.9] font-bold tracking-[-0.06em] uppercase">
+                Start a<br />
+                Conversation.
+              </h2>
+              <Image
+                src="/elements/golden-shiny-starburst.png"
+                alt=""
+                aria-hidden
+                width={160}
+                height={160}
+                className="star-float pointer-events-none absolute -top-[0.45em] left-[4.3em] w-[0.55em]"
+              />
+            </div>
+            <p className="text-ink/65 mt-8 max-w-md text-lg leading-relaxed">
+              Choose the path that fits: brand partnerships or an event pitch / collaboration
+              proposal.
             </p>
           </div>
 
-          <dl className="grid gap-6 text-sm sm:grid-cols-2">
-            <div>
-              <dt className="text-paper/40 mb-1">New business</dt>
+          <dl className="grid gap-3 text-sm sm:grid-cols-2">
+            <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
+              <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
+                Email
+              </dt>
               <dd>
-                <a href={`mailto:${site.contact.email}`} className="hover:text-brand text-lg">
+                <a
+                  href={`mailto:${site.contact.email}`}
+                  className="text-lg font-medium break-all hover:text-[#216974]"
+                >
                   {site.contact.email}
                 </a>
               </dd>
             </div>
-            <div>
-              <dt className="text-paper/40 mb-1">Media & PR</dt>
-              <dd>
-                <a href={`mailto:${site.contact.pressEmail}`} className="hover:text-brand text-lg">
-                  {site.contact.pressEmail}
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="text-paper/40 mb-1">Phone</dt>
+            <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
+              <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
+                Phone
+              </dt>
               <dd>
                 <a
                   href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
-                  className="hover:text-brand text-lg"
+                  className="text-lg font-medium break-all hover:text-[#216974]"
                 >
                   {site.contact.phone}
                 </a>
               </dd>
             </div>
-            <div>
-              <dt className="text-paper/40 mb-1">Studio</dt>
-              <dd className="text-lg">{site.location}, India</dd>
+            <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
+              <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
+                Office Location
+              </dt>
+              <dd className="text-lg font-medium">Bengaluru</dd>
+            </div>
+            <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
+              <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
+                Media &amp; PR Enquiries
+              </dt>
+              <dd>
+                <a
+                  href={`mailto:${site.contact.pressEmail}`}
+                  className="text-lg font-medium break-all hover:text-[#216974]"
+                >
+                  {site.contact.pressEmail}
+                </a>
+              </dd>
             </div>
           </dl>
         </div>
 
         <form
           onSubmit={onSubmit}
-          className="border-ink-line bg-ink-soft rounded-3xl border p-6 backdrop-blur md:p-10"
+          className="relative rounded-[2rem] bg-white p-6 shadow-[0_30px_60px_-30px_rgb(11_11_15/0.35)] md:p-10"
         >
+          {/* Aqua starburst stuck on the form's corner, like the other sections. */}
+          <StickerBurst
+            color="#54c4b6"
+            className="pointer-events-none absolute -top-7 -right-5 w-14 md:-top-9 md:-right-7 md:w-20"
+          />
           <div
             role="radiogroup"
             aria-label="Enquiry type"
-            className="bg-ink/40 mb-8 inline-flex rounded-full p-1"
+            className="mb-8 flex flex-wrap rounded-2xl bg-[#e8f6f3] p-1"
           >
             {(
               [
-                ["project", "Start a project"],
-                ["press", "Media / PR"],
+                ["brand", "For Brands seeking Partnerships"],
+                ["event", "For Event Organizers / Creators"],
               ] as const
             ).map(([value, label]) => (
               <button
@@ -116,10 +146,15 @@ export function Contact() {
                 type="button"
                 role="radio"
                 aria-checked={type === value}
-                onClick={() => setType(value)}
+                onClick={() => {
+                  setType(value);
+                  setSent(false);
+                }}
                 className={cn(
-                  "rounded-full px-5 py-2.5 text-sm font-medium transition-colors",
-                  type === value ? "bg-paper text-ink" : "text-paper/60 hover:text-paper",
+                  "flex-1 rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors",
+                  type === value
+                    ? "bg-[#216974] text-white shadow-md shadow-[#216974]/25"
+                    : "text-ink/60 hover:text-ink",
                 )}
               >
                 {label}
@@ -150,66 +185,63 @@ export function Contact() {
               />
             </label>
             <label className="block sm:col-span-2">
-              <span className="sr-only">Company or publication</span>
+              <span className="sr-only">Company or organization</span>
               <input
-                name="company"
+                name="organization"
                 autoComplete="organization"
-                placeholder={type === "press" ? "Publication / outlet" : "Company / brand"}
+                placeholder={type === "brand" ? "Brand / Company" : "Organization / Event"}
                 className={field}
               />
             </label>
           </div>
 
-          {type === "project" && (
-            <>
-              <fieldset className="mt-8">
-                <legend className="text-paper/50 mb-3 text-sm">What do you need?</legend>
-                <div className="flex flex-wrap gap-2">
-                  {expertise.map((e) => (
-                    <button
-                      key={e.title}
-                      type="button"
-                      aria-pressed={services.includes(e.title)}
-                      onClick={() => toggle(e.title)}
-                      className={cn(
-                        "rounded-full border px-4 py-2 text-sm transition-colors",
-                        services.includes(e.title)
-                          ? "bg-brand text-ink border-brand"
-                          : "border-paper/20 text-paper/75 hover:border-paper/50",
-                      )}
-                    >
-                      {e.title}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
-
-              <label className="mt-6 block">
-                <span className="text-paper/50 text-sm">Monthly budget</span>
-                <select name="budget" defaultValue="" className={cn(field, "appearance-none")}>
-                  <option value="" disabled className="bg-ink">
-                    Select a range
+          {type === "brand" && (
+            <div className="mt-7 grid gap-6 sm:grid-cols-2">
+              <label className="block">
+                <span className="text-ink/55 text-sm">Select Event Interest</span>
+                <select
+                  name="eventInterest"
+                  defaultValue=""
+                  required
+                  className={cn(field, "appearance-none")}
+                >
+                  <option value="" disabled className="bg-white">
+                    Select an event
                   </option>
-                  {budgets.map((b) => (
-                    <option key={b} className="bg-ink">
-                      {b}
-                    </option>
-                  ))}
+                  <option className="bg-white">Cini-Mini 2026</option>
+                  <option className="bg-white">SS Calendar</option>
+                  <option className="bg-white">Upcoming IPs</option>
                 </select>
               </label>
-            </>
+              <label className="block">
+                <span className="text-ink/55 text-sm">Preferred Sponsorship Budget Bracket</span>
+                <select
+                  name="budget"
+                  defaultValue=""
+                  required
+                  className={cn(field, "appearance-none")}
+                >
+                  <option value="" disabled className="bg-white">
+                    Select a range
+                  </option>
+                  <option className="bg-white">₹15K–₹2.5L+</option>
+                </select>
+              </label>
+            </div>
           )}
 
-          <label className="mt-2 block">
-            <span className="sr-only">Message</span>
+          <label className="mt-6 block">
+            <span className="sr-only">
+              {type === "brand" ? "Partnership details" : "Event pitch"}
+            </span>
             <textarea
               name="message"
               required
               rows={4}
               placeholder={
-                type === "press"
-                  ? "Tell us about the story, interview or feature*"
-                  : "Tell us about your brand and goals*"
+                type === "brand"
+                  ? "Tell us about your brand and partnership goals*"
+                  : "Submit Your Event Pitch / Collaboration Proposal*"
               }
               className={cn(field, "resize-none")}
             />
@@ -217,17 +249,17 @@ export function Contact() {
 
           <button
             type="submit"
-            className="bg-paper text-ink group mt-10 flex w-full items-center justify-between rounded-full py-2 pr-2 pl-7 text-base font-semibold transition-colors hover:bg-white"
+            className="group mt-10 flex w-full items-center justify-between rounded-full bg-[#216974] py-2 pr-2 pl-7 text-left text-base font-semibold text-white transition-colors hover:bg-[#1b5a64]"
           >
-            {type === "press" ? "Send Press Enquiry" : "Send Project Enquiry"}
-            <span className="bg-ink text-paper grid h-12 w-12 place-items-center rounded-full transition-transform duration-500 group-hover:-rotate-45">
+            {type === "brand"
+              ? "Request Pitch Deck"
+              : "Submit Your Event Pitch / Collaboration Proposal"}
+            <span className="text-brand-night grid h-12 w-12 shrink-0 place-items-center rounded-full bg-white transition-transform duration-500 group-hover:-rotate-45">
               →
             </span>
           </button>
-          <p className="text-paper/40 mt-4 text-center text-xs" aria-live="polite">
-            {sent
-              ? "Your email app should open with the enquiry ready to send."
-              : "No spam. Your details are only used to reply to you."}
+          <p className="text-ink/50 mt-4 text-center text-xs" aria-live="polite">
+            {sent && "Your email app should open with the enquiry ready to send."}
           </p>
         </form>
       </div>

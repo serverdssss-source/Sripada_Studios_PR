@@ -1,106 +1,144 @@
 import Image from "next/image";
 import { founders, type Founder } from "@/content/site";
-import { Accent, Section, SectionHeading } from "@/components/ui";
+import { ButtonLink, Section } from "@/components/ui";
 import { Reveal } from "@/components/reveal";
+import { StickerBurst } from "@/components/sticker-burst";
 import { cn } from "@/lib/cn";
+
+// Poster-style card per founder: a giant serif first name across the top, the cut-out portrait
+// standing in front of it (head over the letters), and a short uppercase block of their focus.
+const cards: {
+  card: string;
+  name: string;
+  text: string;
+  /** Where the portrait stands, and how tall it is relative to the card. */
+  photo: string;
+  /** Where the uppercase text block sits. */
+  copy: string;
+  /** Giant-name size in container-width units, so the name always spans the card. */
+  nameSize: string;
+  /** Starburst sticker stuck on one corner of the card. */
+  burst: { color: string; position: string };
+}[] = [
+  {
+    card: "bg-[#e9e3ff]",
+    name: "text-[#8b5cf6]",
+    text: "text-[#216974]",
+    photo: "-left-[3%] h-[74%]",
+    copy: "top-[31%] left-[54%] max-w-[40%] items-start text-left",
+    nameSize: "text-[21cqw]",
+    burst: { color: "#54c4b6", position: "-top-6 -left-5 md:-top-8 md:-left-7" },
+  },
+  {
+    card: "bg-[#216974]",
+    name: "text-[#f5f5f3]",
+    text: "text-[#f5f5f3]",
+    photo: "-right-[9%] h-[74%]",
+    copy: "top-[31%] left-[7%] max-w-[42%] items-start text-left",
+    nameSize: "text-[21cqw]",
+    burst: { color: "#8b5cf6", position: "-bottom-6 -left-5 md:-bottom-8 md:-left-7" },
+  },
+];
 
 export function Founders() {
   return (
     <Section id="founders" tone="cream">
-      <SectionHeading
-        eyebrow="The Founders"
-        titleClassName="text-[clamp(2.25rem,4.7vw,67px)]"
-        title={
-          <>
-            The People Behind <Accent>Sripada</Accent>
-          </>
-        }
-      />
+      <Reveal>
+        {/* Same big, bold, tight uppercase type as "FLAGSHIP", cut out like a sticker (thick
+            white outline + soft shadow), with a small floating star on its corner. Sizes are
+            in em so they scale with the heading. */}
+        <div className="relative mb-8 inline-block text-[length:min(11vw,8.5rem)] md:mb-12">
+          <h2 className="sticker-text text-brand-night leading-[0.85] font-bold tracking-[-0.06em] uppercase">
+            The Founders
+          </h2>
+          <Image
+            src="/elements/golden-shiny-starburst.png"
+            alt=""
+            aria-hidden
+            width={160}
+            height={160}
+            className="star-float pointer-events-none absolute -top-[0.38em] -left-[0.3em] w-[0.5em]"
+          />
+        </div>
+      </Reveal>
 
-      <div className="space-y-28 md:space-y-40">
-        {founders.map((f) => (
-          <FounderBlock key={f.name} founder={f} />
+      <div className="grid gap-6 md:grid-cols-2 md:gap-8">
+        {founders.map((founder, i) => (
+          <Reveal key={founder.name} delay={i * 120} className="relative">
+            <FounderCard founder={founder} style={cards[i % cards.length]} />
+            <StickerBurst
+              color={cards[i % cards.length].burst.color}
+              className={cn(
+                "pointer-events-none absolute z-10 w-14 md:w-20",
+                cards[i % cards.length].burst.position,
+              )}
+            />
+          </Reveal>
         ))}
       </div>
+
+      <Reveal className="mt-10 flex flex-wrap gap-4 md:mt-14">
+        <ButtonLink href="#journey" variant="outline">
+          Explore Our Journey
+        </ButtonLink>
+        <ButtonLink href="#contact" variant="outline">
+          Media &amp; PR Enquiries
+        </ButtonLink>
+      </Reveal>
     </Section>
   );
 }
 
-/**
- * Split a point into a sans lead and a serif-italic accent at a natural break:
- * keep "X & Y" pairs together, never split "|" lists, otherwise accent the
- * last word or two.
- */
-function splitPhrase(text: string): [string, string] {
-  const words = text.split(" ");
-  if (words.includes("|") || words.length < 2) return [text, ""];
-  const take = words.at(-2) === "&" ? 3 : words.length >= 4 ? 2 : 1;
-  return [words.slice(0, -take).join(" "), words.slice(-take).join(" ")];
-}
-
-function FounderBlock({ founder: f }: { founder: Founder }) {
-  const [firstName, lastName] = [
-    f.name.split(" ").slice(0, -1).join(" "),
-    f.name.split(" ").at(-1),
-  ];
-
+function FounderCard({ founder, style }: { founder: Founder; style: (typeof cards)[number] }) {
+  const [first, ...rest] = founder.name.split(" ");
   return (
-    <article className="grid gap-10 md:grid-cols-2 md:gap-16">
-      {/* Left: name + role, the points stacked beneath, CTA at the foot */}
-      <div>
-        <Reveal>
-          <h3 className="text-[clamp(2.25rem,4.5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]">
-            {firstName} <Accent>{lastName}.</Accent>
-            <span className="text-teal mt-3 block text-[0.55em] leading-tight font-normal tracking-[-0.01em]">
-              {f.role}
-            </span>
-          </h3>
-        </Reveal>
+    <figure
+      className={cn(
+        "@container relative aspect-[3/4] overflow-hidden rounded-[2rem] md:rounded-[2.5rem]",
+        style.card,
+      )}
+    >
+      {/* Giant first name, behind the portrait. */}
+      <p
+        aria-hidden
+        className={cn(
+          "absolute inset-x-0 top-[9%] text-center font-serif leading-[0.85] font-semibold tracking-[-0.03em]",
+          style.name,
+          style.nameSize,
+        )}
+      >
+        {first}
+      </p>
 
-        {/* Points: plain rows on the section background, hairline dividers */}
-        <ol className="border-ink/10 divide-ink/10 mt-8 divide-y border-y">
-          {f.points.map((point, i) => {
-            const [lead, accent] = splitPhrase(point);
-            return (
-              <Reveal key={point} as="li" delay={i * 80} className="py-3.5">
-                <p className="flex-1 text-base leading-snug font-medium tracking-[-0.01em] md:text-lg">
-                  {lead}
-                  {accent && (
-                    <>
-                      {" "}
-                      <span className="text-teal font-serif font-normal italic">{accent}</span>
-                    </>
-                  )}
-                </p>
-              </Reveal>
-            );
-          })}
-        </ol>
+      <Image
+        src={founder.cutout}
+        alt={`Portrait of ${founder.name}`}
+        width={800}
+        height={1400}
+        sizes="(min-width: 768px) 30vw, 70vw"
+        className={cn("absolute bottom-0 w-auto max-w-none object-contain", style.photo)}
+      />
 
-        <a
-          href={f.profileHref}
-          className="border-teal text-teal hover:bg-teal hover:text-paper mt-8 inline-block rounded-full border px-6 py-2.5 font-serif text-lg italic transition-colors"
-        >
-          View Profile
-        </a>
-      </div>
-
-      {/* Right: one portrait spanning the bio's full width, bio as a large statement beneath */}
-      <Reveal delay={120}>
-        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl">
-          {/* SAMPLE portrait — replace with the founder's photo */}
-          <Image
-            src={f.image}
-            alt={`Portrait of ${f.name}`}
-            fill
-            sizes="(min-width: 768px) 45vw, 100vw"
-            className={cn("object-cover", f.imagePosition ?? "object-top")}
-          />
-        </div>
-        <p className="mt-8 text-[clamp(1.375rem,2.4vw,2rem)] leading-snug font-medium tracking-[-0.02em]">
-          {f.bio}
-        </p>
-      </Reveal>
-    </article>
+      {/* Name, role and focus, in front of everything. */}
+      <figcaption
+        className={cn(
+          "absolute z-10 flex flex-col gap-[1cqw] text-[2.9cqw] leading-[1.15] font-bold uppercase",
+          style.text,
+          style.copy,
+        )}
+      >
+        <span className="text-[2.1cqw] font-semibold tracking-[0.22em] opacity-80">
+          {founder.role}
+        </span>
+        <span className="text-[4cqw] leading-none tracking-[-0.02em]">
+          {first} {rest.join(" ")}
+        </span>
+        <span className="mt-[1cqw] flex flex-col gap-[0.6cqw] tracking-[-0.01em]">
+          {founder.points.slice(0, 3).map((point) => (
+            <span key={point}>{point}</span>
+          ))}
+        </span>
+      </figcaption>
+    </figure>
   );
 }

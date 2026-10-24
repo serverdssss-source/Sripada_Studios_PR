@@ -15,7 +15,8 @@ export function TeamWhy() {
         }
       />
 
-      <Reveal className="relative aspect-[16/9] overflow-hidden rounded-2xl md:aspect-[21/9]">
+      {/* Dark backdrop shows through the photo's transparent background */}
+      <Reveal className="bg-ink relative aspect-[16/9] overflow-hidden rounded-2xl">
         <Image
           src={site.teamImage}
           alt="The Sripada Studios team"
@@ -28,7 +29,7 @@ export function TeamWhy() {
           {teams.map((t) => (
             <li
               key={t}
-              className="bg-ink/60 border-white/20 text-white rounded-full border px-4 py-2 text-xs backdrop-blur md:text-sm font-medium"
+              className="bg-ink/60 rounded-full border border-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur md:text-sm"
             >
               {t}
             </li>
@@ -41,17 +42,17 @@ export function TeamWhy() {
           <p className="text-teal mb-6 flex items-center gap-3 text-xs font-medium tracking-[0.25em] uppercase">
             Why Sripada Studios
           </p>
-          <h3 className="text-[clamp(2rem,4vw,3.5rem)] leading-none font-medium tracking-[-0.04em] text-ink">
+          <h3 className="text-ink text-[clamp(2rem,4vw,3.5rem)] leading-none font-medium tracking-[-0.04em]">
             One team. <Accent>Multiple capabilities.</Accent>
           </h3>
         </Reveal>
-        <ul className="grid gap-px overflow-hidden rounded-2xl sm:grid-cols-2 bg-ink/10 border border-ink/10 shadow-sm">
+        <ul className="bg-ink/10 border-ink/10 grid gap-px overflow-hidden rounded-2xl border shadow-sm sm:grid-cols-2">
           {reasons.map((r, i) => (
             <Reveal
               key={r}
               as="li"
               delay={i * 60}
-              className="bg-white flex items-center gap-4 p-6 text-lg font-medium tracking-tight text-ink"
+              className="text-ink flex items-center gap-4 bg-white p-6 text-lg font-medium tracking-tight"
             >
               <span className="bg-teal/10 text-teal grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-bold">
                 ✓
@@ -59,7 +60,7 @@ export function TeamWhy() {
               {r}
             </Reveal>
           ))}
-          <li className="bg-ink text-paper transition-colors hover:bg-teal">
+          <li className="bg-ink text-paper hover:bg-teal transition-colors">
             <a
               href="#contact"
               className="flex h-full items-center justify-between gap-4 p-6 text-lg font-semibold tracking-tight"

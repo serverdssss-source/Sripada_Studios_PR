@@ -62,9 +62,9 @@ export function SiteHeader() {
           <div className="flex items-center gap-3">
             <a
               href="#contact"
-              className="bg-ink text-paper hover:bg-teal-deep hidden rounded-full px-5 py-2.5 text-sm font-medium transition-colors sm:inline-block"
+              className="bg-brand-teal hover:bg-brand-teal-light hidden rounded-full px-5 py-2.5 text-sm font-medium text-white transition-colors sm:inline-block"
             >
-              Start a Project
+              Sponsor an Event
             </a>
             <button
               type="button"
@@ -111,9 +111,9 @@ export function SiteHeader() {
             <a
               href="#contact"
               onClick={() => setOpen(false)}
-              className="bg-ink text-paper mt-8 block rounded-full py-4 text-center font-medium"
+              className="bg-brand-teal mt-8 block rounded-full py-4 text-center font-medium text-white"
             >
-              Start a Project
+              Sponsor an Event
             </a>
             <p className="text-ink/50 mt-6 text-center text-sm">{site.contact.email}</p>
           </nav>
@@ -129,8 +129,8 @@ export function SiteHeader() {
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-24 opacity-0",
         )}
-      >
-        Start a Project →
+        >
+        Sponsor an Event →
       </a>
     </>
   );

@@ -42,7 +42,7 @@ export function Work() {
                   {w.client}
                 </h3>
                 <p className="text-paper/85 mt-4 max-w-md text-lg leading-relaxed">{w.summary}</p>
-                <p className="text-paper/85 mt-10 max-w-md text-base leading-relaxed font-normal text-justify hyphens-auto md:text-lg lg:mt-[120px]">
+                <p className="text-paper/85 mt-10 max-w-md text-justify text-base leading-relaxed font-normal hyphens-auto md:text-lg lg:mt-[120px]">
                   {w.description}
                 </p>
               </Reveal>

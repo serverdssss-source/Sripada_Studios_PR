@@ -2,19 +2,23 @@
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 
-/** Fades children up once they scroll into view. */
+/**
+ * Fades children up once they scroll into view. `effect="pop"` springs it up from further below.
+ */
 export function Reveal({
   children,
   delay = 0,
   className,
   as: Tag = "div",
   style,
+  effect,
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
   as?: "div" | "li";
   style?: CSSProperties;
+  effect?: "pop";
 }) {
   const ref = useRef<HTMLDivElement & HTMLLIElement>(null);
 
@@ -38,6 +42,7 @@ export function Reveal({
     <Tag
       ref={ref}
       data-reveal=""
+      data-effect={effect}
       style={delay ? { ...style, transitionDelay: `${delay}ms` } : style}
       className={className}
     >
