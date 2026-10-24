@@ -100,7 +100,7 @@ export const founders: Founder[] = [
     bio: "Co-Founder Sathwik NJ.",
     points: [
       "6+ Years in Performance Marketing & Strategy",
-      "20+ Clients",
+      "80+ Clients",
       "E-commerce | B2B | B2C",
       "Performance Marketing",
       "Team Building & Business Strategy",
@@ -427,7 +427,7 @@ export const milestones: Milestone[] = [
     detail: "Building teams across creative, social media & performance.",
   },
   {
-    phase: "20+ Clients",
+    phase: "80+ Clients",
     tagline: "Cross-Industry",
     quote: "“Measurable ROI”",
     detail: "Performance marketing across multiple industries.",

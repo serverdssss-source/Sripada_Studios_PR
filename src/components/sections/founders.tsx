@@ -49,7 +49,7 @@ export function Founders() {
             in em so they scale with the heading. */}
         <div className="relative mb-8 inline-block text-[length:min(11vw,8.5rem)] md:mb-12">
           <h2 className="sticker-text text-brand-night leading-[0.85] font-bold tracking-[-0.06em] uppercase">
-            The Founders
+            The Brand Doers
           </h2>
           <Image
             src="/elements/golden-shiny-starburst.png"

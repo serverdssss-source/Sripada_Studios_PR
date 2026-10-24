@@ -5,8 +5,8 @@ import { MetricRoll } from "@/components/metric-roll";
 import type { StickerTone } from "@/components/metric-sticker";
 
 const metrics = [
-  ["2,000+", "Footfall"],
-  ["300+", "Submissions"],
+  ["5,000+", "Footfall"],
+  ["300+", "Short Film Submissions"],
   ["3", "Theatres"],
   ["2M – 3M", "Target Brand Impressions"],
 ];
