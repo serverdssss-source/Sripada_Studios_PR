@@ -38,7 +38,7 @@ export function Hero() {
 
         {/* Matches the reference: no divider, generous gap under the headline. */}
         <div className="mt-10 flex w-full flex-col items-start gap-8 sm:mt-16 sm:gap-10">
-          <p className="max-w-2xl text-left text-base leading-relaxed text-white/75 sm:text-lg">
+          <p className="max-w-4xl text-left text-base leading-relaxed text-white/75 sm:text-2xl">
             Sripada Studios is the ultimate event &amp; digital partner bridging brands, <br />
             high-visibility IP festivals, and top-tier content creation.
           </p>

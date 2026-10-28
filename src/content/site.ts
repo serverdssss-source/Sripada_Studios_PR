@@ -35,6 +35,7 @@ export const site = {
   // TODO: point each at its own form or page once they exist.
   heroCtas: [
     { audience: "For Brands", label: "Sponsor an Event", href: "#contact" },
+    { audience: "For Sponsors", label: "Looking for a Sponsor", href: "#contact" },
     { audience: "For Event Creators / Partners", label: "Collaborate with Us", href: "#contact" },
   ],
   socials: [

@@ -25,7 +25,7 @@ const cards: {
     name: "text-[#8b5cf6]",
     text: "text-[#216974]",
     // Whole seated photo, framed as in the original (chair base and hand inside the card).
-    photo: "-left-[4%] h-[78%] translate-y-[6%]",
+    photo: "-left-[4%] h-[65%] translate-y-[6%]",
     copy: "top-[31%] left-[54%] max-w-[40%] items-start text-left",
     nameSize: "text-[21cqw]",
     burst: { color: "#54c4b6", position: "-top-6 -left-5 md:-top-8 md:-left-7" },
@@ -34,7 +34,7 @@ const cards: {
     card: "bg-[#216974]",
     name: "text-[#f5f5f3]",
     text: "text-[#f5f5f3]",
-    photo: "-right-[9%] h-[74%]",
+    photo: "-right-[9%] h-[65%]",
     copy: "top-[31%] left-[7%] max-w-[42%] items-start text-left",
     nameSize: "text-[21cqw]",
     burst: { color: "#8b5cf6", position: "-bottom-6 -left-5 md:-bottom-8 md:-left-7" },

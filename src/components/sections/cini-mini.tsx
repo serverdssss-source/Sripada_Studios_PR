@@ -24,9 +24,6 @@ const jury = [
   "Satya Hegde",
   "Simple Suni",
   "Sruthi Hariharan",
-  "Ramesh Aravind",
-  "Upendra",
-  "Daali Dhananjay",
 ];
 
 export function CiniMini() {

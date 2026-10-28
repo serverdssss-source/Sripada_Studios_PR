@@ -23,7 +23,7 @@ const integrations = [
     items: [
       "Co-presentation of major award categories.",
       "Exclusive product gift hamper placement for celebrity guests.",
-      "VIP Jury dinner branding and networking access.",
+      "VIP dinner branding and networking access.",
     ],
   },
 ];

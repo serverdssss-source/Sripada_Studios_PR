@@ -36,19 +36,19 @@ const valueNodes = [
     ],
   },
   {
-    audience: "For Sripada Studios",
+    audience: "By Sripada Studios",
     benefits: [
       [
         "Full-Stack Production",
-        "End-to-end creative production, digital marketing, and distribution.",
+        "End-to-end creative production, digital marketing, and distribution — built and delivered by Sripada Studios.",
       ],
       [
         "Mainstream Network",
-        "Direct connections to premier film institutes, studios, and industry leaders.",
+        "Direct connections to premier film institutes, studios, and industry leaders, powered by Sripada Studios.",
       ],
       [
         "Innovator in Formats",
-        "Pioneering short films, mini-series, vertical cinema, and AI film integrations.",
+        "Pioneering short films, mini-series, vertical cinema, and AI film integrations — crafted by Sripada Studios.",
       ],
     ],
   },
@@ -122,8 +122,7 @@ export function ValueProposition() {
         <Reveal delay={100} className="mt-10 grid gap-4 md:ml-[34%] md:grid-cols-2 md:gap-10">
           <p className="text-lg font-semibold md:text-xl">Brands × Events × Sripada Studios.</p>
           <p className="text-brand-night/65 leading-relaxed">
-            A structured breakdown of how Sripada Studios drives value across all three nodes: For
-            Brands, For Sponsorships &amp; Events, and For Sripada Studios.
+            A structured breakdown of how <br /> Sripada Studios drives value across all three nodes.
           </p>
         </Reveal>
 
