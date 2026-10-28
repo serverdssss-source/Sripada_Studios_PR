@@ -400,9 +400,9 @@ export const work = [
         "Video editing",
       ],
       note: "One team for every hospital brand, from the camp to the clinic's feed.",
-      poster: "/aanya%20camp/SSD_9365.jpg",
+      poster: "/aanya%20camp/SSD_9342.jpg",
     },
-    image: "/aanya%20camp/SSD_9365.jpg",
+    image: "/aanya%20camp/SSD_9342.jpg",
     gallery: hearfonGallery,
   },
   {
@@ -433,10 +433,9 @@ export const work = [
         "Video editing",
       ],
       note: "One team for every education brand, from the classroom to the campaign.",
-      poster: "/Lil%20Beez/frame-0-00.jpg",
+      poster: "/Lil%20Beez/CC-01.png",
     },
-    // Very first frame (0:00) of the training highlights video.
-    image: "/Lil%20Beez/frame-0-00.jpg",
+    image: "/Lil%20Beez/CC-01.png",
     gallery: littlekidzGallery,
   },
   {
@@ -467,10 +466,9 @@ export const work = [
         "B2B brand amplification",
       ],
       note: "Shot, edited and delivered within the same day, every day of the event.",
-      poster: "/asceent/frame-0-05.jpg",
+      poster: "/asceent/01.png",
     },
-    // Frame grabbed at 0:05 of the 3-day highlights reel.
-    image: "/asceent/frame-0-05.jpg",
+    image: "/asceent/01.png",
     gallery: kovedaaGallery,
   },
 ];
