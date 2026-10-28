@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { Fragment, useState, type FormEvent } from "react";
 import { site } from "@/content/site";
 import Image from "next/image";
 import { StickerBurst } from "@/components/sticker-burst";
@@ -8,12 +8,37 @@ import { cn } from "@/lib/cn";
 
 type EnquiryType = "brand" | "event";
 
+// Enquiries go to every founder listed in the contact details.
+const recipients = site.contact.people.map((p) => p.email).join(",");
+
+type Draft = { subject: string; body: string };
+
+// The same pre-filled email, for visitors without a desktop email app.
+const composeLinks = ({ subject, body }: Draft) => {
+  const q = (params: Record<string, string>) => new URLSearchParams(params).toString();
+  return [
+    {
+      label: "Gmail",
+      href: `https://mail.google.com/mail/?${q({ view: "cm", fs: "1", to: recipients, su: subject, body })}`,
+    },
+    {
+      label: "Outlook",
+      href: `https://outlook.office.com/mail/deeplink/compose?${q({ to: recipients, subject, body })}`,
+    },
+  ];
+};
+
+const CUSTOM_BUDGET = "Custom amount";
+
 const field =
   "border-ink/15 placeholder:text-ink/40 text-ink w-full border-b bg-transparent py-4 text-lg outline-none transition-colors focus:border-[#216974]";
 
 export function Contact() {
   const [type, setType] = useState<EnquiryType>("brand");
-  const [sent, setSent] = useState(false);
+  // The last enquiry sent to the email app, kept so it can be reopened in a webmail tab.
+  const [draft, setDraft] = useState<Draft | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [customBudget, setCustomBudget] = useState(false);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -25,17 +50,35 @@ export function Contact() {
     const body = [
       `Name: ${data.get("name")}`,
       `Email: ${data.get("email")}`,
+      `Phone: ${data.get("phone") || "-"}`,
+      `Designation: ${data.get("designation") || "-"}`,
       `Company / Organization: ${data.get("organization") || "-"}`,
       isBrand && `Event Interest: ${data.get("eventInterest") || "-"}`,
-      isBrand && `Preferred Sponsorship Budget Bracket: ${data.get("budget") || "-"}`,
+      isBrand &&
+        `Preferred Sponsorship Budget: ${
+          (customBudget ? data.get("customBudget") : data.get("budget")) || "-"
+        }`,
       "",
       `${data.get("message")}`,
     ]
       .filter((line) => line !== false)
       .join("\n");
 
-    window.location.href = `mailto:${site.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    window.location.href = `mailto:${recipients}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setDraft({ subject, body });
+    setCopied(false);
+  }
+
+  async function copyDraft() {
+    if (!draft) return;
+    try {
+      await navigator.clipboard.writeText(
+        `To: ${recipients.replace(/,/g, ", ")}\nSubject: ${draft.subject}\n\n${draft.body}`,
+      );
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
   }
 
   return (
@@ -72,50 +115,44 @@ export function Contact() {
             </p>
           </div>
 
-          <dl className="grid gap-3 text-sm sm:grid-cols-2">
-            <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
-              <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
-                Email
-              </dt>
-              <dd>
-                <a
-                  href={`mailto:${site.contact.email}`}
-                  className="text-lg font-medium break-all hover:text-[#216974]"
-                >
-                  {site.contact.email}
-                </a>
-              </dd>
-            </div>
-            <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
-              <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
-                Phone
-              </dt>
-              <dd>
-                <a
-                  href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
-                  className="text-lg font-medium break-all hover:text-[#216974]"
-                >
-                  {site.contact.phone}
-                </a>
-              </dd>
-            </div>
-            <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
+          <dl className="grid gap-3 text-sm sm:grid-cols-[1.4fr_1fr] lg:grid-cols-1 xl:grid-cols-[1.4fr_1fr]">
+            {/* One row per founder: email, then phone. */}
+            {site.contact.people.map((person) => (
+              <Fragment key={person.email}>
+                <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
+                  <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
+                    Email · {person.name}
+                  </dt>
+                  <dd>
+                    <a
+                      href={`mailto:${person.email}`}
+                      className="text-lg font-medium break-all hover:text-[#216974]"
+                    >
+                      {person.email}
+                    </a>
+                  </dd>
+                </div>
+                <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
+                  <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
+                    Phone · {person.name}
+                  </dt>
+                  <dd>
+                    <a
+                      href={`tel:${person.phone.replace(/\s/g, "")}`}
+                      className="text-lg font-medium break-all hover:text-[#216974]"
+                    >
+                      {person.phone}
+                    </a>
+                  </dd>
+                </div>
+              </Fragment>
+            ))}
+            <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)] sm:col-span-2 lg:col-span-1 xl:col-span-2">
               <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
                 Office Location
               </dt>
-              <dd className="text-lg font-medium">Bengaluru</dd>
-            </div>
-            <div className="rounded-2xl bg-white p-4 shadow-[0_10px_30px_-20px_rgb(11_11_15/0.4)]">
-              <dt className="mb-1 text-xs font-semibold tracking-[0.16em] text-[#216974] uppercase">
-                Media &amp; PR Enquiries
-              </dt>
-              <dd>
-                <a
-                  href={`mailto:${site.contact.pressEmail}`}
-                  className="text-lg font-medium break-all hover:text-[#216974]"
-                >
-                  {site.contact.pressEmail}
-                </a>
+              <dd className="text-lg leading-snug font-medium">
+                <address className="not-italic">{site.contact.address}</address>
               </dd>
             </div>
           </dl>
@@ -148,7 +185,7 @@ export function Contact() {
                 aria-checked={type === value}
                 onClick={() => {
                   setType(value);
-                  setSent(false);
+                  setDraft(null);
                 }}
                 className={cn(
                   "flex-1 rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors",
@@ -181,6 +218,26 @@ export function Contact() {
                 required
                 autoComplete="email"
                 placeholder="Email*"
+                className={field}
+              />
+            </label>
+            <label className="block">
+              <span className="sr-only">Phone number</span>
+              <input
+                name="phone"
+                type="tel"
+                required
+                autoComplete="tel"
+                placeholder="Phone number*"
+                className={field}
+              />
+            </label>
+            <label className="block">
+              <span className="sr-only">Designation</span>
+              <input
+                name="designation"
+                autoComplete="organization-title"
+                placeholder="Designation"
                 className={field}
               />
             </label>
@@ -219,14 +276,28 @@ export function Contact() {
                   name="budget"
                   defaultValue=""
                   required
+                  onChange={(e) => setCustomBudget(e.target.value === CUSTOM_BUDGET)}
                   className={cn(field, "appearance-none")}
                 >
                   <option value="" disabled className="bg-white">
                     Select a range
                   </option>
                   <option className="bg-white">₹15K–₹2.5L+</option>
+                  <option className="bg-white">{CUSTOM_BUDGET}</option>
                 </select>
               </label>
+              {customBudget && (
+                <label className="block sm:col-span-2">
+                  <span className="sr-only">Your budget</span>
+                  <input
+                    name="customBudget"
+                    required
+                    autoFocus
+                    placeholder="Type your budget (e.g. ₹50,000)*"
+                    className={field}
+                  />
+                </label>
+              )}
             </div>
           )}
 
@@ -258,9 +329,36 @@ export function Contact() {
               →
             </span>
           </button>
-          <p className="text-ink/50 mt-4 text-center text-xs" aria-live="polite">
-            {sent && "Your email app should open with the enquiry ready to send."}
-          </p>
+          <div aria-live="polite">
+            {draft && (
+              <div className="mt-5 rounded-2xl bg-[#e8f6f3] p-4 text-center">
+                <p className="text-ink/70 text-sm">
+                  Your email app should open with the enquiry ready to send. Didn&apos;t open? Send
+                  it from your browser instead:
+                </p>
+                <div className="mt-3 flex flex-wrap justify-center gap-2">
+                  {composeLinks(draft).map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-full bg-[#216974] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1b5a64]"
+                    >
+                      Open in {link.label} ↗
+                    </a>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={copyDraft}
+                    className="rounded-full border border-[#216974] px-4 py-2 text-sm font-semibold text-[#216974] transition-colors hover:bg-white"
+                  >
+                    {copied ? "Copied!" : "Copy details"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </form>
       </div>
     </section>

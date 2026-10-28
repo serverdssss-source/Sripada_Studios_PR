@@ -131,8 +131,8 @@ export function ShowreelExperience({ children }: { children: ReactNode }) {
           <video
             ref={videoRef}
             className="absolute inset-0 h-full w-full origin-center object-cover"
-            src="/media/showreel/concert-sample.mp4"
-            poster="/media/showreel/concert-poster.webp"
+            src="/Showreel_SSD.mp4"
+            poster="/media/showreel/showreel-ssd-poster.webp"
             autoPlay
             loop
             muted

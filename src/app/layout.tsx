@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Geom, Playfair_Display } from "next/font/google";
+import { Geom, Luckiest_Guy, Playfair_Display } from "next/font/google";
 import { site } from "@/content/site";
 import "./globals.css";
 
-// The only two typefaces on the site: Geom (UI/body/headings, variable weight
-// with italics) and Playfair Display (serif accents).
+// Typefaces: Geom (UI/body/headings, variable weight with italics), Playfair Display
+// (serif accents) and Luckiest Guy (only for the comic "MEME" sticker letters).
 const geom = Geom({
   variable: "--font-geom",
   subsets: ["latin"],
@@ -15,6 +15,12 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
   style: ["normal", "italic"],
+});
+
+const luckiestGuy = Luckiest_Guy({
+  variable: "--font-luckiest",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -39,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       // The inline script adds `js` before paint so scroll-reveal never hides content without JS.
       suppressHydrationWarning
-      className={`${geom.variable} ${playfair.variable} antialiased`}
+      className={`${geom.variable} ${playfair.variable} ${luckiestGuy.variable} antialiased`}
     >
       <head>
         <script

@@ -45,3 +45,7 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# Large source files (over GitHub 100MB limit), kept locally
+/public/AA2/AA2_CHECKER BOARD.pdf
+/public/AA2/AA2_Shanvi Speech Horizontal.mp4

@@ -115,7 +115,11 @@ export function SiteHeader() {
             >
               Sponsor an Event
             </a>
-            <p className="text-ink/50 mt-6 text-center text-sm">{site.contact.email}</p>
+            <ul className="text-ink/50 mt-6 space-y-1 text-center text-sm">
+              {site.contact.people.map((p) => (
+                <li key={p.email}>{p.email}</li>
+              ))}
+            </ul>
           </nav>
         )}
       </header>
@@ -129,7 +133,7 @@ export function SiteHeader() {
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-24 opacity-0",
         )}
-        >
+      >
         Sponsor an Event →
       </a>
     </>

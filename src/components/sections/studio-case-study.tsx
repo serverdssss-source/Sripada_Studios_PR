@@ -3,6 +3,8 @@ import { Section } from "@/components/ui";
 import { Reveal } from "@/components/reveal";
 import { StickerBurst } from "@/components/sticker-burst";
 import { work } from "@/content/site";
+import { cn } from "@/lib/cn";
+import { CaseStudyDialog } from "@/components/case-study-dialog";
 
 export function StudioCaseStudy() {
   return (
@@ -76,7 +78,7 @@ export function StudioCaseStudy() {
             {work.map((item) => (
               <li
                 key={item.client}
-                className="group text-brand-night flex flex-col rounded-[1.5rem] bg-[#f5f5f3] p-4"
+                className="group text-brand-night relative flex flex-col rounded-[1.5rem] bg-[#f5f5f3] p-4"
               >
                 <p className="text-[0.65rem] font-semibold tracking-[0.2em] text-[#216974] uppercase">
                   {item.category}
@@ -95,7 +97,10 @@ export function StudioCaseStudy() {
                     alt={`${item.client} campaign creative`}
                     fill
                     sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
-                    className="object-cover transition-transform duration-700 ease-(--ease-premium) group-hover:scale-105"
+                    className={cn(
+                      "object-cover transition-transform duration-700 ease-(--ease-premium) group-hover:scale-105",
+                      "imagePosition" in item && item.imagePosition,
+                    )}
                   />
                   <span
                     aria-hidden
@@ -104,6 +109,9 @@ export function StudioCaseStudy() {
                     →
                   </span>
                 </div>
+                {"caseStudy" in item && item.caseStudy && (
+                  <CaseStudyDialog client={item.client} study={item.caseStudy} />
+                )}
               </li>
             ))}
           </ul>

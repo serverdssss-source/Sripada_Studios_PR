@@ -19,6 +19,8 @@ import { SiteFooter } from "@/components/sections/site-footer";
 import { ValueProposition } from "@/components/sections/value-proposition";
 import { CiniMini } from "@/components/sections/cini-mini";
 import { FlagshipBanner } from "@/components/sections/flagship-banner";
+import { CalendarSponsors } from "@/components/sections/calendar-sponsors";
+import { RameshPortfolio } from "@/components/sections/ramesh-portfolio";
 import { StudioCaseStudy } from "@/components/sections/studio-case-study";
 import { BrandIntegrations } from "@/components/sections/brand-integrations";
 // import { DigitalCommerce } from "@/components/sections/digital-commerce";
@@ -37,8 +39,10 @@ export default function Home() {
         {/* <TravelLayer /> */}
         {/* <ClientMarquee /> */}
         <ValueProposition />
+        <RameshPortfolio />
         <FlagshipBanner />
         <CiniMini />
+        <CalendarSponsors />
         <StudioCaseStudy />
         <Founders />
         {/* The Sripada Studios Journey (milestones), restored after the founders. */}

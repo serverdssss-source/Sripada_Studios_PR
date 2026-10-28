@@ -37,7 +37,7 @@ export function FlagshipBanner() {
     <section
       id="flagship"
       aria-label="Flagship Sponsorship Opportunity"
-      className="text-brand-night relative z-10 overflow-x-clip bg-[#54c4b6] px-4 pt-16 pb-12 sm:px-8 md:pt-24 md:pb-16"
+      className="text-brand-night relative z-20 overflow-x-clip bg-[#54c4b6] px-4 pt-16 pb-12 sm:px-8 md:pt-24 md:pb-22 lg:pb-26"
     >
       <div className="relative mx-auto max-w-7xl">
         {/* Top row: the Cini-Mini 2026 logo in a small round badge (dark, so the gold reads on
@@ -126,9 +126,10 @@ export function FlagshipBanner() {
           ))}
         </ul>
 
-        {/* Spinning round badge overlapping the bottom of "OPPORTUNITY" and the top of the Cini-Mini card,
-            with a clapperboard at its centre. */}
-        <div className="absolute -bottom-20 left-1/2 hidden -translate-x-1/2 md:block lg:-bottom-24">
+        {/* Spinning round badge just below "OPPORTUNITY" (clear of the letters), centred on the top
+            edge of the Cini-Mini card, with a clapperboard at its centre. The section's z-20 keeps it
+            above the card's z-10 play overlay. */}
+        <div className="absolute -bottom-40 left-1/2 hidden -translate-x-1/2 md:block lg:-bottom-48">
           <div className="relative grid h-36 w-36 place-items-center rounded-full bg-[#f5f5f3] shadow-[0_20px_40px_-20px_rgb(11_11_15/0.5)] lg:h-44 lg:w-44">
             <svg
               aria-hidden

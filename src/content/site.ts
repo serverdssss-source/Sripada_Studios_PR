@@ -5,6 +5,7 @@
 
 export const site = {
   name: "Sripada Studios",
+  url: "https://sripadastudios.com/",
   tagline: "Connecting Iconic Brands with Cultural Events & Cinematic Media.",
   headline:
     "Sripada Studios is the ultimate event & digital partner bridging brands, high-visibility IP festivals, and top-tier content creation.",
@@ -14,9 +15,21 @@ export const site = {
   teamImage: "/media/team/teams.webp",
   // TODO: confirm public contact details
   contact: {
-    email: "connect@sripadastudios.in",
-    pressEmail: "connect@sripadastudios.in",
-    phone: "+91 00000 00000",
+    // One row per founder in the contact section; enquiries go to both.
+    people: [
+      {
+        name: "Phani Srivatsa",
+        email: "phanisrivatsa@sripadastudios.com",
+        phone: "+91 90608 70117",
+      },
+      {
+        name: "Sathwik NJ",
+        email: "sathwiknj@sripadastudios.in",
+        phone: "+91 88841 48055",
+      },
+    ],
+    address:
+      "No:4/2, 1st, Chord Rd, Rajaji Nagar Industrial Town, Rajajinagar, Bengaluru, Karnataka 560010",
   },
   // Hero calls to action, one per audience.
   // TODO: point each at its own form or page once they exist.
@@ -24,11 +37,10 @@ export const site = {
     { audience: "For Brands", label: "Sponsor an Event", href: "#contact" },
     { audience: "For Event Creators / Partners", label: "Collaborate with Us", href: "#contact" },
   ],
-  // TODO: replace with real profile URLs
   socials: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/" },
-    { label: "Instagram", href: "https://www.instagram.com/" },
-    { label: "YouTube", href: "https://www.youtube.com/" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/sripada-studios/" },
+    { label: "Instagram", href: "https://www.instagram.com/sripadastudios/" },
+    { label: "YouTube", href: "https://www.youtube.com/@SRIPADASTUDIOS" },
   ],
 };
 
@@ -90,7 +102,7 @@ export const founders: Founder[] = [
     ],
     image: "/images/phani.webp",
     imagePosition: "object-[center_25%]",
-    cutout: "/images/founders/phani-cutout.webp",
+    cutout: "/images/founders/phani-soft-cutout.webp",
     profileHref: "#contact", // TODO: link to full profile
   },
   {
@@ -323,44 +335,143 @@ const filmsGallery = [
 // TODO: link each card to a full case study once written
 export const work = [
   {
-    category: "Healthcare",
-    client: "HearFon Audiology",
-    summary: "Digital awareness + lead generation + regional content strategy.",
+    category: "Entertainment & Film",
+    client: "America America 2 (AA2)",
+    summary: "Star cast press launch, media strategy & regional promotion campaign.",
     description:
-      "Hearing loss is easy to ignore until it isn't. We made hearing care feel approachable for HearFon with empathetic, family-first campaigns, Kannada-first regional content that speaks to local audiences, and lead-generation funnels that turn awareness into booked hearing consultations at HearFon clinics.",
-    services: ["Lead Generation", "Regional Content", "Awareness"],
-    image: "/media/hearfon/hf-october-2.webp",
+      "For director Nagathihalli Chandrashekhar's America America 2 (AA2) starring Nirup Bhandari and Shanvi Srivastava, we spearheaded the official press launch and digital media strategy — driving widespread regional coverage, entertainment portal syndication, and high-engagement social buzz across Karnataka.",
+    services: ["Film Marketing", "Press & PR", "Social Buzz"],
+    // Opens as a full case study when the card is clicked.
+    caseStudy: {
+      label: "America America 2 · Film Marketing",
+      headline: [
+        { text: "We ran the" },
+        { text: "complete", highlight: "violet" as const },
+        { text: "movie marketing", highlight: "teal" as const },
+        { text: "for AA2." },
+      ],
+      intro:
+        "For director Nagathihalli Chandrashekhar's America America 2, starring Nirup Bhandari and Shanvi Srivastava, we handled the film's marketing end to end — from the first poster to packed theatres.",
+      services: [
+        "Complete movie marketing",
+        "Poster designs & printables",
+        "Promotions & viral marketing",
+        "Theatre visits",
+        "Audience visits, capturing real reactions",
+        "Event coverage",
+        "Audio launch",
+        "Pre & post production",
+        "Performance marketing",
+        "Driving theatre footfalls",
+      ],
+      note: "From the first poster to a full house, every step handled in-house.",
+      poster: "/AA2/AA2%20-%20DESIGNS.png",
+    },
+    image: "/AA2/AA2%20-%20DESIGNS.png",
+    // Tall 9:16 poster: crop toward the top so the title stays in the 4:5 card.
+    imagePosition: "object-[center_20%]",
+    gallery: filmsGallery,
+  },
+  {
+    category: "Healthcare & CSR",
+    client: "Aanya Hospital",
+    summary: "World Cancer Day awareness camp, doctor spotlights & screening drives.",
+    description:
+      "To mark World Cancer Day, we partnered with Aanya Hospital to drive local community outreach for their cancer screening & oncology health camp. Combining digital registration drives, local doctor spotlights, and empathetic awareness messaging, the campaign mobilized hundreds of patients for preventative screenings.",
+    services: ["Healthcare Outreach", "Camp Awareness", "Lead Funnel"],
+    // Shown as how we work with every hospital and healthcare brand.
+    caseStudy: {
+      label: "Aanya Hospital · Healthcare",
+      headline: [
+        { text: "We market" },
+        { text: "hospitals", highlight: "violet" as const },
+        { text: "end to end,", highlight: "teal" as const },
+        { text: "like Aanya." },
+      ],
+      intro:
+        "From Aanya Hospital's World Cancer Day screening camp to everyday patient outreach, this is how we work with every hospital and healthcare brand: one team for production, awareness and growth.",
+      services: [
+        "Photo & video production",
+        "Health & awareness camps",
+        "Performance marketing",
+        "Social media management",
+        "Graphic design",
+        "Web development",
+        "Video editing",
+      ],
+      note: "One team for every hospital brand, from the camp to the clinic's feed.",
+      poster: "/aanya%20camp/SSD_9365.jpg",
+    },
+    image: "/aanya%20camp/SSD_9365.jpg",
     gallery: hearfonGallery,
   },
   {
-    category: "Education",
-    client: "Littlekidz / Lilbeez",
-    summary: "Admissions + franchise + digital growth campaigns.",
+    category: "Education & Training",
+    client: "Lil Beez",
+    summary: "Teacher's Success Training 2026, educator summits & curriculum launch.",
     description:
-      "Two sister brands, one growth story. For Little Kidz Preschool we run admission-season campaigns that answer parents' real questions, while Lilbeez showcases its learning books and teacher-training programmes to schools and educators. Franchise-focused outreach ties it together, building trust and expanding the network.",
-    services: ["Admissions", "Franchise Growth", "Performance"],
-    image: "/media/littlekidz/lk-cc-02-1.webp",
+      "Empowering educators across early childhood institutions, the Lil Beez Teacher's Success Training summit brought together teachers, school leaders, and early childhood specialists. We produced video highlights, event documentation, and digital outreach to spotlight early childhood education leadership.",
+    services: ["Teacher Training", "Video Production", "Curriculum PR"],
+    // Shown as how we work with every school and education brand.
+    caseStudy: {
+      label: "Lil Beez · Education",
+      headline: [
+        { text: "We grow" },
+        { text: "education", highlight: "violet" as const },
+        { text: "brands,", highlight: "teal" as const },
+        { text: "like Lil Beez." },
+      ],
+      intro:
+        "From the Lil Beez Teacher's Success Training 2026 summit to year-round admissions campaigns, this is how we work with every school and education brand: one team for production, outreach and growth.",
+      services: [
+        "Photo & video production",
+        "Event & training coverage",
+        "Performance marketing",
+        "Social media management",
+        "Graphic design",
+        "Web development",
+        "Video editing",
+      ],
+      note: "One team for every education brand, from the classroom to the campaign.",
+      poster: "/Lil%20Beez/frame-0-00.jpg",
+    },
+    // Very first frame (0:00) of the training highlights video.
+    image: "/Lil%20Beez/frame-0-00.jpg",
     gallery: littlekidzGallery,
   },
   {
-    category: "Consumer",
-    client: "Kovedaa",
-    summary: "Beauty & skincare brand launch + influencer + performance strategy.",
+    category: "B2B & Events",
+    client: "Ascent Lifts & Escalators",
+    summary: "ACETECH 2026 3-day expo highlights, VIP delegation & brand amplification.",
     description:
-      "Kovedaa entered a crowded skincare market with body care made simple. We shaped the launch end to end: ingredient-led storytelling that makes the products easy to understand, influencer collaborations that show real routines, and performance campaigns built to drive combos and repeat purchases.",
-    services: ["Brand Launch", "Influencer", "Performance"],
-    image: "/media/kovedaa/kovedaa-designs.webp",
+      "For Ascent Lifts & Escalators at ACETECH 2026, we delivered end-to-end on-ground event coverage, social-first highlight reels, and executive brand amplification — capturing the grandeur of their pavilion, high-profile VIP walk-throughs, and industry buzz across architecture and construction networks.",
+    services: ["Event Coverage", "Highlight Reels", "B2B Branding"],
+    // Shown as how we cover every corporate and B2B event.
+    caseStudy: {
+      label: "Ascent Lifts & Escalators · ACETECH 2026",
+      headline: [
+        { text: "Corporate" },
+        { text: "events,", highlight: "violet" as const },
+        { text: "delivered", highlight: "teal" as const },
+        { text: "the same day." },
+      ],
+      intro:
+        "At ACETECH 2026 we covered Ascent Lifts & Escalators across all three days. This is how we handle every corporate and B2B event: we shoot, edit and deliver within the same day, so the buzz goes live while the event is still on.",
+      services: [
+        "End-to-end event coverage",
+        "Same-day highlight reels",
+        "Photo & video production",
+        "VIP & delegation coverage",
+        "Social media posting",
+        "Graphic design",
+        "B2B brand amplification",
+      ],
+      note: "Shot, edited and delivered within the same day, every day of the event.",
+      poster: "/asceent/frame-0-05.jpg",
+    },
+    // Frame grabbed at 0:05 of the 3-day highlights reel.
+    image: "/asceent/frame-0-05.jpg",
     gallery: kovedaaGallery,
-  },
-  {
-    category: "Entertainment",
-    client: "Film & Entertainment Campaigns",
-    summary: "Digital campaigns, influencer outreach, event amplification & audience building.",
-    description:
-      "From release buzz to packed venues, we help films and entertainment brands find their audience. Digital campaigns build anticipation, influencer outreach reaches deep into fan communities, and on-ground events are amplified online to keep the conversation going long after the day.",
-    services: ["Film Marketing", "Influencer Outreach", "Events"],
-    image: "/media/films/ui.webp",
-    gallery: filmsGallery,
   },
 ];
 

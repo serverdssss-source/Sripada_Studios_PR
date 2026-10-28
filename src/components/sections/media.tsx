@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 
 /** The press room: a headline-sized title and eight spotlight categories. */
 export function Media() {
-  const pressHref = `mailto:${site.contact.pressEmail}?subject=Media%20Kit%20%26%20Press%20Enquiry`;
+  const pressHref = `mailto:${site.contact.people.map((p) => p.email).join(",")}?subject=Media%20Kit%20%26%20Press%20Enquiry`;
 
   return (
     <Section id="media">

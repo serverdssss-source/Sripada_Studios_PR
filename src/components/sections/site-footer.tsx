@@ -33,7 +33,9 @@ export function SiteFooter() {
             ))}
           </ul>
           <p>
-            © {site.name}, {site.location}
+            <a href={site.url} className="hover:text-paper">
+              © {site.name}, {site.location}
+            </a>
           </p>
         </div>
       </div>

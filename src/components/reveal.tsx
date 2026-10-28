@@ -4,6 +4,7 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 
 /**
  * Fades children up once they scroll into view. `effect="pop"` springs it up from further below.
+ * `effect="none"` provides scroll observation without adding default opacity/translate transitions.
  */
 export function Reveal({
   children,
@@ -18,7 +19,7 @@ export function Reveal({
   className?: string;
   as?: "div" | "li";
   style?: CSSProperties;
-  effect?: "pop";
+  effect?: "pop" | "none";
 }) {
   const ref = useRef<HTMLDivElement & HTMLLIElement>(null);
 
